@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-display: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --font-handwriting: 'Caveat', cursive;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  
+  --color-brand-black: #000000;
+  --color-brand-dark: #111111;
+  --color-brand-mint: #CFF3CF;
+  --color-brand-beige: #FAF3EB;
+  --color-brand-gray: #838487;
+  --color-brand-lime: #c4e117;
+}
+
+/* Primary heading & display typography matching the modern fitness studio aesthetic */
+.font-\[\'Anton\'\],
+.font-display,
+.font-heading {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  font-weight: 800;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  background-color: #FAF3EB;
+}
+
+body {
+  background-color: #FAF3EB;
+  color: #000000;
+  overflow-x: hidden;
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF3EB;
+}
+::-webkit-scrollbar-thumb {
+  background: #CFF3CF;
+  border-radius: 9999px;
+  border: 2px solid #FAF3EB;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #838487;
+}
+

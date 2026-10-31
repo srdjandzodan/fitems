@@ -1,0 +1,87 @@
+# ==============================================================================
+# Netlify Configuration - New Fitems Studio (React + Vite + Brevo Functions)
+# ==============================================================================
+
+[build]
+  # Komanda za build produkcionog frontenda
+  command = "npm run build"
+  # Folder koji Netlify servira posetiocima
+  publish = "dist"
+  # Folder sa Netlify serverless funkcijama (za backend /api rute)
+  functions = "netlify/functions"
+
+[build.environment]
+  # Preporučena verzija Node.js na Netlify-u
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# ------------------------------------------------------------------------------
+# Preusmeravanja za API rute (Brevo slanje mejlova i health check)
+# ------------------------------------------------------------------------------
+
+[[redirects]]
+  from = "/api/send-email"
+  to = "/.netlify/functions/send-email"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/book"
+  to = "/.netlify/functions/send-email"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/contact"
+  to = "/.netlify/functions/send-email"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/health"
+  to = "/.netlify/functions/health"
+  status = 200
+  force = true
+
+# ------------------------------------------------------------------------------
+# SPA Routing (Single Page Application fallback za React)
+# Bilo koja ruta u browseru (npr. /onama, /cene) se preusmerava na index.html
+# ------------------------------------------------------------------------------
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ------------------------------------------------------------------------------
+# HTTP Zaglavlja (Keširanje i Bezbednost)
+# ------------------------------------------------------------------------------
+
+# Agresivno keširanje za hashovane Vite build assete
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Sigurnosna zaglavlja za sve stranice
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Zaglavlja za Sitemap.xml (Googlebot / Bingbot)
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=UTF-8"
+    Cache-Control = "public, max-age=86400"
+
+# Zaglavlja za Robots.txt
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=UTF-8"
+    Cache-Control = "public, max-age=86400"
+

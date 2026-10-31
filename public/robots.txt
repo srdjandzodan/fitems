@@ -1,0 +1,43 @@
+# ==============================================================================
+# Robots.txt - NEW FITEMS Studio Nova Pazova (https://newfitems.rs)
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Allow: /koncept
+Allow: /usluge
+Allow: /iskustva
+Allow: /cenovnik
+Allow: /kontakt
+Allow: /assets/
+Disallow: /api/
+Disallow: /*.php$
+
+# Popular Search Engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# AI Crawlers & Assistive Agents
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Sitemap Location
+Sitemap: https://newfitems.rs/sitemap.xml

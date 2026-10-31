@@ -1,0 +1,6 @@
+{
+  "name": "New Fitems · EMS Studio Nova Pazova",
+  "description": "Ekskluzivni EMS trening studio za žene u Novoj Pazovi. Vrati se u formu za 90 dana uz samo 2 sata nedeljno — EMS treninzi, vakum sprava, madero terapija i personalizovani plan ishrane.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
