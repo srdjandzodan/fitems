@@ -8,14 +8,14 @@
 
   <!-- 1. Početna stranica -->
   <url>
-    <loc>https://newfitems.rs/</loc>
+    <loc>https://newfitems.com/</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.00</priority>
-    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.rs/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://newfitems.rs/" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.com/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://newfitems.com/" />
     <image:image>
-      <image:loc>https://newfitems.rs/assets/hero_blend_image.jpg</image:loc>
+      <image:loc>https://newfitems.com/assets/hero_blend_image.jpg</image:loc>
       <image:title>NEW FITEMS · EMS Trening Studio Nova Pazova</image:title>
       <image:caption>Savremeni fitnes studio za individualne vođene EMS treninge od 30 minuta u Novoj Pazovi</image:caption>
     </image:image>
@@ -23,20 +23,20 @@
 
   <!-- 2. Brend Koncept -->
   <url>
-    <loc>https://newfitems.rs/koncept</loc>
+    <loc>https://newfitems.com/koncept</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
-    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.rs/koncept" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.com/koncept" />
   </url>
 
   <!-- 3. Sprave & Usluge -->
   <url>
-    <loc>https://newfitems.rs/usluge</loc>
+    <loc>https://newfitems.com/usluge</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.rs/usluge" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.com/usluge" />
     <image:image>
       <image:loc>https://64.media.tumblr.com/78b135ec5509e73cc4afe1e85ec4317b/822f13a412d29853-5b/s2048x3072/9be4a61ff24135879e903a852e495094cc7e68f7.jpg</image:loc>
       <image:title>EMS Vođeni Trening Odela i Tehnologija</image:title>
@@ -53,29 +53,29 @@
 
   <!-- 4. Iskustva & Rezultati -->
   <url>
-    <loc>https://newfitems.rs/iskustva</loc>
+    <loc>https://newfitems.com/iskustva</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
-    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.rs/iskustva" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.com/iskustva" />
   </url>
 
   <!-- 5. Cenovnik & Paketi -->
   <url>
-    <loc>https://newfitems.rs/cenovnik</loc>
+    <loc>https://newfitems.com/cenovnik</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.rs/cenovnik" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.com/cenovnik" />
   </url>
 
   <!-- 6. Kontakt & Lokacija -->
   <url>
-    <loc>https://newfitems.rs/kontakt</loc>
+    <loc>https://newfitems.com/kontakt</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
-    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.rs/kontakt" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.com/kontakt" />
   </url>
 
 </urlset>

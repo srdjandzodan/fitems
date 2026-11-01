@@ -14,7 +14,7 @@ export interface PageSEO {
   schema: object;
 }
 
-export const BASE_URL = 'https://newfitems.rs';
+export const BASE_URL = 'https://newfitems.com';
 
 export const PAGE_SEO_DATA: Record<PageId, PageSEO> = {
   home: {

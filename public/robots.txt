@@ -1,5 +1,5 @@
 # ==============================================================================
-# Robots.txt - NEW FITEMS Studio Nova Pazova (https://newfitems.rs)
+# Robots.txt - NEW FITEMS Studio Nova Pazova (https://newfitems.com)
 # ==============================================================================
 
 User-agent: *
@@ -40,4 +40,4 @@ User-agent: PerplexityBot
 Allow: /
 
 # Sitemap Location
-Sitemap: https://newfitems.rs/sitemap.xml
+Sitemap: https://newfitems.com/sitemap.xml
