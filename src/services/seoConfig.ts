@@ -19,17 +19,17 @@ export const BASE_URL = 'https://newfitems.com';
 export const PAGE_SEO_DATA: Record<PageId, PageSEO> = {
   home: {
     path: '/',
-    title: 'NEW FITEMS · EMS Trening Studio Nova Pazova | 30 Minuta do Forme',
-    description: 'Ekskluzivni EMS fitnes studio u Novoj Pazovi. Vođeni treninzi od 30 minuta za žene i muškarce na modernim spravama uz trenere Vuka i Lazara. Zakaži probni termin.',
-    keywords: 'EMS trening Nova Pazova, EMS fitnes studio, Nova Pazova, Stara Pazova, Batajnica, maderoterapija, vakum kapsula, treninzi za zene, 30 minuta trening, personalni trener, Vuk Djoric',
+    title: 'NEW FITEMS · Black Friday 3u1 Paket −15% | Nova Pazova',
+    description: 'Black Friday ponuda: 3u1 paket (vakuum trening 30 min, madero roller 15 min i EMS tretman 30 min) za 11.900 din mesečno umesto 14.000 din. Samo do 30. novembra.',
+    keywords: 'Black Friday fitness Nova Pazova, 3u1 paket New Fitems, vakuum trening, madero roller, EMS tretman Nova Pazova, Stara Pazova, Batajnica, 75 minuta trening',
     ogImage: `${BASE_URL}/assets/hero_blend_image.jpg`,
     schema: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
       '@id': `${BASE_URL}/#webpage`,
       url: `${BASE_URL}/`,
-      name: 'NEW FITEMS · EMS Trening Studio Nova Pazova',
-      description: 'Savremeni fitness studio za individualne vođene EMS treninge od 30 minuta u Novoj Pazovi.',
+      name: 'NEW FITEMS · Black Friday 3u1 Paket Nova Pazova',
+      description: 'Tvojih 75 minuta. Dva puta nedeljno. 3u1 paket: vakuum trening, madero roller i EMS tretman u jednom dolasku.',
       inLanguage: 'sr',
       isPartOf: {
         '@type': 'WebSite',
@@ -64,7 +64,7 @@ export const PAGE_SEO_DATA: Record<PageId, PageSEO> = {
     title: 'Usluge i Sprave · EMS Vođeni Trening, Vakum IR & Madero Roler | NEW FITEMS',
     description: 'Pregled svih sprava i tretmana: EMS individualni trening (30 min), Vakum kapsula sa infracrvenim svetlima za topljenje masti i Madero roler masaža.',
     keywords: 'EMS odelo trening, vakum kapsula infracrvena, madero roler celulit, tretmani tela Nova Pazova, limfna drenaza, zatezanje koze, mrsavljenje stomak',
-    ogImage: 'https://64.media.tumblr.com/78b135ec5509e73cc4afe1e85ec4317b/822f13a412d29853-5b/s2048x3072/9be4a61ff24135879e903a852e495094cc7e68f7.jpg',
+    ogImage: 'https://64.media.tumblr.com/7069e0c06abed0c8c0a2143be18db975/6de5ed117d7b0ed3-63/s2048x3072/80c53ff40bb4ff137cee2c243f9ff17ee20a993d.jpg',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'ItemList',
@@ -129,37 +129,23 @@ export const PAGE_SEO_DATA: Record<PageId, PageSEO> = {
   },
   pricing: {
     path: '/cenovnik',
-    title: 'Cenovnik i Paketi Treninga · 90-Dnevni Total Fit | NEW FITEMS',
-    description: 'Pogledajte cene i pakete: Starter paket (8 termina), najtraženiji 90-Dnevni Total Fit program i Body Sculpt tretmani. 1-na-1 rad i kompletna oprema uključeni.',
-    keywords: 'EMS trening cena Nova Pazova, cenovnik New Fitems, 90 dana fitnes program cena, cene teretane Nova Pazova, probni trening cena',
+    title: '3u1 Paket · Black Friday −15% (11.900 din) | NEW FITEMS',
+    description: 'Black Friday 3u1 paket: vakuum trening (30 min), madero roller (15 min) i EMS tretman (30 min), 2 dolaska nedeljno uz trenera. 11.900 din mesečno do 30. novembra.',
+    keywords: '3u1 paket cena Nova Pazova, Black Friday EMS popust, vakuum trening madero roller cena, cenovnik New Fitems Nova Pazova',
     ogImage: 'https://64.media.tumblr.com/7b1c6284676c98713e149ec851cce6eb/822f13a412d29853-53/s2048x3072/8d5e2a3040cb212763ededa0c87bb9b379e0910b.jpg',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'OfferCatalog',
       '@id': `${BASE_URL}/cenovnik#pricing`,
       url: `${BASE_URL}/cenovnik`,
-      name: 'Cenovnik Paketa Treninga - New Fitems',
+      name: 'Black Friday 3u1 Paket - New Fitems',
       itemListElement: [
         {
           '@type': 'Offer',
-          name: 'Starter Mesečni Paket (8 EMS termina)',
-          price: '14500',
+          name: '3u1 Paket (Black Friday −15%)',
+          price: '11900',
           priceCurrency: 'RSD',
-          description: 'Uvodni paket sa 8 vođenih 1-na-1 EMS treninga, merenjem i opremom.',
-        },
-        {
-          '@type': 'Offer',
-          name: '90-Dnevni Total Fit Program',
-          price: '39900',
-          priceCurrency: 'RSD',
-          description: 'Kompletan sistem transformacije: EMS + Vakum IR + Madero roler + Plan ishrane.',
-        },
-        {
-          '@type': 'Offer',
-          name: 'Body Sculpt & Detox (10 termina)',
-          price: '16900',
-          priceCurrency: 'RSD',
-          description: '10 kombinovanih termina: Vakum IR kapsula i Madero roler za eliminaciju celulita.',
+          description: 'Vakuum trening 30 min + Madero roller 15 min + EMS tretman 30 min, 2 dolaska nedeljno (8 dolazaka mesečno) uz trenera.',
         },
       ],
     },
@@ -198,6 +184,7 @@ export const PAGE_SEO_DATA: Record<PageId, PageSEO> = {
  */
 export const ROUTE_TO_PAGE: Record<string, PageId> = {
   '/': 'home',
+  '/black-friday': 'home',
   '/pocetna': 'home',
   '/home': 'home',
   '/koncept': 'concept',

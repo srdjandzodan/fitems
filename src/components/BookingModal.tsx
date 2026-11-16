@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { X, CheckCircle2, Mail, Phone, ArrowRight, MapPin, Loader2, AlertCircle } from 'lucide-react';
-import { CONTACT_INFO } from '../data/siteData';
+import { X, CheckCircle2, Mail, Phone, ArrowRight, MapPin, Loader2, AlertCircle, Instagram } from 'lucide-react';
+import { BOOKING_SERVICE_OPTIONS, CONTACT_INFO, DEFAULT_BOOKING_SERVICE } from '../data/siteData';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -11,14 +11,14 @@ interface BookingModalProps {
 export const BookingModal: React.FC<BookingModalProps> = ({
   isOpen,
   onClose,
-  initialService = 'EMS Vođeni Trening'
+  initialService = DEFAULT_BOOKING_SERVICE
 }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [notes, setNotes] = useState('');
   const [service, setService] = useState(initialService);
-  const [timePreference, setTimePreference] = useState('Popodne (14:00 – 18:00)');
+  const [timePreference, setTimePreference] = useState('Popodne');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -45,7 +45,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           service,
           timePreference,
           message: notes.trim(),
-          source: 'BookingModal',
+          source: 'BookingModal (Black Friday)',
         }),
       });
 
@@ -66,9 +66,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     }
   };
 
-  const mailSubject = encodeURIComponent(`Upit za termin: ${service} - ${name}`);
+  const mailSubject = encodeURIComponent(`Black Friday Upit: ${service} - ${name}`);
   const mailBody = encodeURIComponent(
-    `Poštovani Vuk i Lazar,\n\nZainteresovan/a sam za probni termin u New Fitems studiju.\n\nIme: ${name}\nTelefon: ${phone}\nEmail: ${email}\nIzabrani program: ${service}\nŽeljeno vreme: ${timePreference}\nNapomena: ${notes}\n\nPozdrav,\n${name}`
+    `Poštovani Vuk i Lazar,\n\nZainteresovana sam za Black Friday termin u New Fitems studiju.\n\nIme: ${name}\nTelefon: ${phone}\nEmail: ${email}\nIzabrani program: ${service}\nKada mi najviše odgovaraju termini: ${timePreference}\nNapomena: ${notes}\n\nPozdrav,\n${name}`
   );
   const directMailLink = `mailto:${CONTACT_INFO.email}?subject=${mailSubject}&body=${mailBody}`;
 
@@ -79,6 +79,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     setPhone('');
     setEmail('');
     setNotes('');
+    setService(DEFAULT_BOOKING_SERVICE);
     onClose();
   };
 
@@ -97,15 +98,15 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
         {!submitted ? (
           <div>
-            <div className="mb-6">
-              <span className="font-['Caveat'] text-2xl text-stone-600 block">
-                Zakaži termin
+            <div className="mb-6 pr-6">
+              <span className="inline-block px-2.5 py-1 rounded-md bg-black text-[#c4e117] font-['Montserrat'] font-extrabold text-[10px] uppercase tracking-wider mb-2.5">
+                BLACK FRIDAY −15% · 11.900 DIN
               </span>
-              <h3 className="font-['Montserrat'] font-extrabold text-2xl sm:text-3xl uppercase tracking-wider text-[#000000]">
-                DOBRODOŠLI U NEW FITEMS
+              <h3 className="font-['Montserrat'] font-extrabold text-xl sm:text-2xl uppercase tracking-wide text-[#000000] leading-tight">
+                Rezerviši svoj termin
               </h3>
-              <p className="text-xs text-stone-600 mt-1">
-                Pošalji upit za probni trening ili razgovor sa Vukom i Lazarom u Novoj Pazovi.
+              <p className="text-xs text-stone-600 mt-1.5">
+                Ostavi nam ime i broj, a mi te zovemo u roku od 24h.
               </p>
             </div>
 
@@ -115,7 +116,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 <div className="space-y-1">
                   <p className="font-semibold">{submitError}</p>
                   <p className="text-[11px] text-amber-800">
-                    Slobodno nas pozovite direktno na <a href={`tel:${CONTACT_INFO.phone}`} className="font-bold underline">{CONTACT_INFO.phoneDisplay}</a>.
+                    Slobodno nas pozovi direktno na <a href={`tel:${CONTACT_INFO.phone}`} className="font-bold underline">{CONTACT_INFO.phoneDisplay}</a>.
                   </p>
                 </div>
               </div>
@@ -129,7 +130,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 <input
                   type="text"
                   required
-                  placeholder="npr. Jelena Petrović ili Marko"
+                  placeholder="npr. Jelena Petrović"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-black text-sm text-stone-900"
@@ -167,34 +168,44 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
               <div>
                 <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1">
-                  Program koji te zanima
+                  Program koji te interesuje
                 </label>
                 <select
                   value={service}
                   onChange={(e) => setService(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-black text-sm text-stone-900 cursor-pointer"
+                  className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-black text-sm text-stone-900 cursor-pointer font-medium"
                 >
-                  <option value="EMS Vođeni Trening">EMS Vođeni Trening (30 min)</option>
-                  <option value="Vakum Sprava sa IR Svetlima">Vakum Sprava sa IR Svetlima</option>
-                  <option value="Madero Roler Terapija">Madero Roler Terapija</option>
-                  <option value="90-Dnevni Total Fit">90-Dnevni Total Fit Program</option>
-                  <option value="Uvodne konsultacije">Uvodne konsultacije i upoznavanje sa studijom</option>
+                  {BOOKING_SERVICE_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1">
-                  Željeni deo dana
+                <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1.5">
+                  Kada ti najviše odgovaraju termini?
                 </label>
-                <select
-                  value={timePreference}
-                  onChange={(e) => setTimePreference(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-black text-sm text-stone-900 cursor-pointer"
-                >
-                  <option value="Prepodne (09:00 – 13:00)">Prepodne (09:00 – 13:00)</option>
-                  <option value="Popodne (14:00 – 18:00)">Popodne (14:00 – 18:00)</option>
-                  <option value="Veče (18:00 – 21:00)">Veče (18:00 – 21:00)</option>
-                </select>
+                <div className="grid grid-cols-3 gap-2">
+                  {['Pre podne', 'Popodne', 'Uveče'].map((slot) => {
+                    const selected = timePreference === slot;
+                    return (
+                      <button
+                        key={slot}
+                        type="button"
+                        onClick={() => setTimePreference(slot)}
+                        className={`py-2.5 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                          selected
+                            ? 'bg-black text-[#c4e117] border-black shadow-xs'
+                            : 'bg-white text-stone-700 border-stone-300 hover:border-black'
+                        }`}
+                      >
+                        {slot}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               <div>
@@ -214,20 +225,24 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#000000] hover:bg-stone-900 disabled:opacity-75 disabled:cursor-not-allowed text-[#CFF3CF] py-3.5 rounded-xl font-['Montserrat'] font-extrabold uppercase tracking-wider text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                  className="w-full bg-[#c4e117] hover:bg-[#b5d014] disabled:opacity-75 disabled:cursor-not-allowed text-black py-3.5 rounded-xl font-['Montserrat'] font-extrabold uppercase tracking-wider text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="w-4 h-4 animate-spin text-[#CFF3CF]" />
-                      <span>Slanje upita preko Brevo servera...</span>
+                      <Loader2 className="w-4 h-4 animate-spin text-black" />
+                      <span>Slanje prijave...</span>
                     </>
                   ) : (
                     <>
-                      <span>Pošalji upit za termin</span>
+                      <span>Želim 3u1 paket</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
                 </button>
+
+                <p className="text-[11px] text-center text-stone-500">
+                  Tvoje podatke koristimo samo da bismo te kontaktirali u vezi sa terminom.
+                </p>
 
                 <div className="relative flex items-center justify-center my-2">
                   <div className="border-t border-stone-300 w-full" />
@@ -258,33 +273,53 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           </div>
         ) : (
           <div className="py-6 text-center space-y-4">
-            <div className="w-16 h-16 bg-[#CFF3CF] border-2 border-black text-black rounded-full mx-auto flex items-center justify-center shadow-xs">
+            <div className="w-16 h-16 bg-[#c4e117] border-2 border-black text-black rounded-full mx-auto flex items-center justify-center shadow-xs">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
-            <h3 className="font-['Montserrat'] font-extrabold text-2xl uppercase tracking-wider text-black">
-              HVALA TI, {name}!
-            </h3>
+            <div className="space-y-1">
+              <h3 className="font-['Montserrat'] font-extrabold text-2xl uppercase tracking-wider text-black">
+                Prijava je stigla!
+              </h3>
+              <p className="text-sm font-semibold text-stone-900">
+                Napravila si prvi korak, i to je najteži deo.
+              </p>
+            </div>
 
             <p className="text-xs sm:text-sm text-stone-700 leading-relaxed max-w-sm mx-auto">
-              Tvoj upit je uspešno poslat! Vuk ili Lazar će te ubrzo pozvati na broj <strong className="text-black">{phone}</strong> radi potvrde slobodnog termina.
+              Pozvaćemo te u roku od <strong>24 sata</strong> sa broja{' '}
+              <a href={`tel:${CONTACT_INFO.phone}`} className="font-bold text-black underline">
+                {CONTACT_INFO.phoneDisplay}
+              </a>
+              . Sačuvaj ga u imeniku da znaš da smo to mi.
             </p>
 
             <div className="p-4 bg-white rounded-2xl border border-stone-300 text-left text-xs space-y-1.5">
-              <div><strong className="text-black">Izabrani program:</strong> {service}</div>
-              <div><strong className="text-black">Vreme:</strong> {timePreference}</div>
-              {email && <div><strong className="text-black">Email:</strong> {email}</div>}
-              {notes && <div><strong className="text-black">Napomena:</strong> {notes}</div>}
+              <div><strong className="text-black">Program:</strong> {service}</div>
+              <div><strong className="text-black">Preferirani termin:</strong> {timePreference}</div>
               <div><strong className="text-black">Studio:</strong> Kralja Petra I Karađorđevića 87, Nova Pazova</div>
             </div>
 
-            <div className="pt-2 flex flex-col gap-2">
+            <div className="pt-2 flex flex-col gap-2.5">
+              <p className="text-xs text-stone-600">
+                Do tada nas zaprati na Instagramu i upoznaj studio:
+              </p>
+              <a
+                href={CONTACT_INFO.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#c4e117] hover:bg-[#b5d014] text-black py-3.5 rounded-xl text-xs font-['Montserrat'] font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-xs"
+              >
+                <Instagram className="w-4 h-4" />
+                <span>@newfitems.novapazova</span>
+              </a>
+
               <a
                 href={directMailLink}
-                className="w-full bg-[#000000] text-[#CFF3CF] hover:bg-stone-900 py-3 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
+                className="w-full bg-black text-[#CFF3CF] hover:bg-stone-900 py-3 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                <span>Pošalji i dodatnu kopiju na email studija</span>
+                <span>Pošalji i dodatnu kopiju na email</span>
               </a>
 
               <button

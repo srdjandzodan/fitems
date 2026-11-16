@@ -6,19 +6,28 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-  <!-- 1. Početna stranica -->
+  <!-- 1. Početna stranica (Black Friday 3u1) -->
   <url>
     <loc>https://newfitems.com/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.00</priority>
     <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.com/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://newfitems.com/" />
     <image:image>
       <image:loc>https://newfitems.com/assets/hero_blend_image.jpg</image:loc>
-      <image:title>NEW FITEMS · EMS Trening Studio Nova Pazova</image:title>
-      <image:caption>Savremeni fitnes studio za individualne vođene EMS treninge od 30 minuta u Novoj Pazovi</image:caption>
+      <image:title>NEW FITEMS · Black Friday 3u1 Paket Nova Pazova</image:title>
+      <image:caption>3u1 paket: vakuum trening, madero roller i EMS tretman u Novoj Pazovi</image:caption>
     </image:image>
+  </url>
+
+  <!-- 1b. Black Friday Landing ruta -->
+  <url>
+    <loc>https://newfitems.com/black-friday</loc>
+    <lastmod>2026-11-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.98</priority>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.com/black-friday" />
   </url>
 
   <!-- 2. Brend Koncept -->
@@ -38,15 +47,15 @@
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="sr" href="https://newfitems.com/usluge" />
     <image:image>
-      <image:loc>https://64.media.tumblr.com/78b135ec5509e73cc4afe1e85ec4317b/822f13a412d29853-5b/s2048x3072/9be4a61ff24135879e903a852e495094cc7e68f7.jpg</image:loc>
+      <image:loc>https://64.media.tumblr.com/7069e0c06abed0c8c0a2143be18db975/6de5ed117d7b0ed3-63/s2048x3072/80c53ff40bb4ff137cee2c243f9ff17ee20a993d.jpg</image:loc>
       <image:title>EMS Vođeni Trening Odela i Tehnologija</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://64.media.tumblr.com/fec0be0b29e6d5f4f2cbd57edd261ad7/822f13a412d29853-57/s2048x3072/6dfd9655f65c52e15b59451da6b2cecf8845d6ac.jpg</image:loc>
+      <image:loc>https://64.media.tumblr.com/5677d53408918f07d4e93d302f5dbb3e/6de5ed117d7b0ed3-27/s2048x3072/ae385b6e1cab2f976ef431bda945fc28fa2ef42a.jpg</image:loc>
       <image:title>Vakum Sprava sa Infracrvenim Svetlima</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://64.media.tumblr.com/14f5653bb31d374ba0bf4b77cc72e5bb/822f13a412d29853-f1/s2048x3072/dde0f364bf813796496bcd845be9510bf1cf26cc.jpg</image:loc>
+      <image:loc>https://64.media.tumblr.com/a8003352326c3c01d244dccc74ced654/6de5ed117d7b0ed3-5e/s2048x3072/ef2517e1d45fa6ef6c8c29d5c7461f398dd721a9.jpg</image:loc>
       <image:title>Madero Roler Masaža za Zatezanje i Celulit</image:title>
     </image:image>
   </url>

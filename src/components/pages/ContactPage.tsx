@@ -16,7 +16,7 @@ import {
   Loader2,
   AlertCircle
 } from 'lucide-react';
-import { CONTACT_INFO } from '../../data/siteData';
+import { BOOKING_SERVICE_OPTIONS, CONTACT_INFO, DEFAULT_BOOKING_SERVICE } from '../../data/siteData';
 
 interface ContactPageProps {
   onOpenBooking: () => void;
@@ -27,7 +27,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenBooking }) => {
     name: '',
     phone: '',
     email: '',
-    service: 'EMS Vođeni Trening',
+    service: DEFAULT_BOOKING_SERVICE,
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -321,7 +321,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenBooking }) => {
             <button
               onClick={() => {
                 setSubmitSuccess(false);
-                setFormData({ name: '', phone: '', email: '', service: 'EMS Vođeni Trening', message: '' });
+                setFormData({ name: '', phone: '', email: '', service: DEFAULT_BOOKING_SERVICE, message: '' });
               }}
               className="bg-black text-[#CFF3CF] hover:bg-stone-900 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer"
             >
@@ -388,13 +388,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenBooking }) => {
                 <select
                   value={formData.service}
                   onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-[#FAF3EB]/50 focus:bg-white focus:outline-none focus:border-black text-sm text-stone-900 cursor-pointer"
+                  className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-[#FAF3EB]/50 focus:bg-white focus:outline-none focus:border-black text-sm text-stone-900 cursor-pointer font-medium"
                 >
-                  <option value="EMS Vođeni Trening">EMS Vođeni Trening (30 min)</option>
-                  <option value="Vakum Sprava sa IR Svetlima">Vakum Sprava sa IR Svetlima</option>
-                  <option value="Madero Roler Terapija">Madero Roler Terapija</option>
-                  <option value="90-Dnevni Total Fit">90-Dnevni Total Fit Program</option>
-                  <option value="Opšta pitanja i konsultacije">Opšta pitanja i konsultacije</option>
+                  {BOOKING_SERVICE_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

@@ -16,7 +16,7 @@ export const SERVICES: ServiceItem[] = [
     title: 'EMS Vođeni Trening',
     subtitle: 'Maksimalna mišićna stimulacija u 30\u00A0minuta',
     tag: '30\u00A0MINUTA · 1-NA-1',
-    image: 'https://64.media.tumblr.com/78b135ec5509e73cc4afe1e85ec4317b/822f13a412d29853-5b/s2048x3072/9be4a61ff24135879e903a852e495094cc7e68f7.jpg',
+    image: 'https://64.media.tumblr.com/7069e0c06abed0c8c0a2143be18db975/6de5ed117d7b0ed3-63/s2048x3072/80c53ff40bb4ff137cee2c243f9ff17ee20a993d.jpg',
     description: 'Vežbanje u specijalnim odelima sa elektrodama koje šalju kontrolisane impulse direktno u mišićna vlakna. Tokom 30\u00A0minuta aktivira se preko 90% muskulature istovremeno, bez opterećenja za zglobove i kičmu.',
     duration: '30\u00A0min po terminu',
     benefits: [
@@ -32,7 +32,7 @@ export const SERVICES: ServiceItem[] = [
     title: 'Vakum Sprava sa IR Svetlima',
     subtitle: 'Napredna tehnologija za cirkulaciju i tonus',
     tag: 'INFRACRVENA TEHNOLOGIJA',
-    image: 'https://64.media.tumblr.com/fec0be0b29e6d5f4f2cbd57edd261ad7/822f13a412d29853-57/s2048x3072/6dfd9655f65c52e15b59451da6b2cecf8845d6ac.jpg',
+    image: 'https://64.media.tumblr.com/5677d53408918f07d4e93d302f5dbb3e/6de5ed117d7b0ed3-27/s2048x3072/ae385b6e1cab2f976ef431bda945fc28fa2ef42a.jpg',
     description: 'Kombinacija blagog kardio pokreta u vakum kapsuli sa infracrvenim svetlima. Vakum stvara negativan pritisak koji drastično pojačava mikrocirkulaciju u kritičnim zonama (stomak, bokovi, butine), dok IR svetla zagrevaju tkivo i podstiču eliminaciju viška tečnosti.',
     duration: '30\u00A0min po terminu',
     benefits: [
@@ -48,7 +48,7 @@ export const SERVICES: ServiceItem[] = [
     title: 'Madero Roler Terapija',
     subtitle: 'Mehanička masaža za relaksaciju i zatezanje',
     tag: 'ANTICELULIT & OPORAVAK',
-    image: 'https://64.media.tumblr.com/14f5653bb31d374ba0bf4b77cc72e5bb/822f13a412d29853-f1/s2048x3072/dde0f364bf813796496bcd845be9510bf1cf26cc.jpg',
+    image: 'https://64.media.tumblr.com/a8003352326c3c01d244dccc74ced654/6de5ed117d7b0ed3-5e/s2048x3072/ef2517e1d45fa6ef6c8c29d5c7461f398dd721a9.jpg',
     description: 'Specijalno dizajnirani anatomski drveni roleri koji podstiču cirkulaciju, razbijaju celulit i opuštaju zategnute mišiće nakon treninga. Telo dobija definisaniji izgled, a koža postaje primetno zategnuta i glatka.',
     duration: '20–30\u00A0min',
     benefits: [
@@ -127,57 +127,141 @@ export const CLIENT_STORIES = [
   }
 ];
 
+export interface BlackFridayStep {
+  step: string;
+  id: string;
+  title: string;
+  duration: string;
+  subtitle: string;
+  description: string;
+  visualNote: string;
+  image: string;
+}
+
+export const BLACK_FRIDAY_STEPS: BlackFridayStep[] = [
+  {
+    step: '01',
+    id: 'vakum-trening',
+    title: 'Vakuum trening',
+    duration: '30 minuta',
+    subtitle: 'Hod u vakuum kapsuli · Infracrvena svetla',
+    description:
+      'Lagan hod u vakuum kapsuli uz infracrvena svetla. Tempo je prilagođen tebi, bez trčanja i bez iscrpljivanja.',
+    visualNote: 'Donji deo tela je u zatvorenoj kapsuli na traci za lagani hod dok IR svetla zagrevaju kritične zone.',
+    image:
+      'https://64.media.tumblr.com/5677d53408918f07d4e93d302f5dbb3e/6de5ed117d7b0ed3-27/s2048x3072/ae385b6e1cab2f976ef431bda945fc28fa2ef42a.jpg',
+  },
+  {
+    step: '02',
+    id: 'madero-roller',
+    title: 'Madero roller',
+    duration: '15 minuta',
+    subtitle: 'Mehanička masaža drvenim valjcima',
+    description:
+      'Masaža roller aparatom koja opušta telo i doprinosi glađem izgledu kože.',
+    visualNote: 'Rotirajući anatomski drveni roleri prelaze preko nogu, bokova i stomaka uz prijatan oporavak.',
+    image:
+      'https://64.media.tumblr.com/a8003352326c3c01d244dccc74ced654/6de5ed117d7b0ed3-5e/s2048x3072/ef2517e1d45fa6ef6c8c29d5c7461f398dd721a9.jpg',
+  },
+  {
+    step: '03',
+    id: 'ems-tretman',
+    title: 'EMS tretman',
+    duration: '30 minuta',
+    subtitle: 'Ležiš dok aparat pokreće tvoje mišiće',
+    description:
+      'Ti ležiš, a aparat pokreće tvoje mišiće. Biraš zonu na kojoj želiš da radiš: stomak, zadnjicu ili butine.',
+    visualNote: 'Udobno ležiš dok kontrolisani bioelektrični impulsi ciljano kontrahuju izabranu grupu mišića.',
+    image:
+      'https://64.media.tumblr.com/7069e0c06abed0c8c0a2143be18db975/6de5ed117d7b0ed3-63/s2048x3072/80c53ff40bb4ff137cee2c243f9ff17ee20a993d.jpg',
+  },
+];
+
+export const BLACK_FRIDAY_FAQ = [
+  {
+    question: 'Da li je Black Friday cena trajna?',
+    answer:
+      'Ne. 11.900 din važi samo za one koji počnu do 30. novembra. Posle toga paket se vraća na redovnu cenu od 14.000 din.',
+  },
+  {
+    question: 'Nikad nisam trenirala. Da li je ovo za mene?',
+    answer:
+      'Da. Ne treba ti nikakvo predznanje ni kondicija, jer program prilagođavamo tvom nivou i trener je uz tebe sve vreme.',
+  },
+  {
+    question: 'Da li EMS tretman boli?',
+    answer:
+      'Ne. Osećaš jake kontrakcije mišića, a intenzitet podešavamo zajedno sa tobom. Narednog dana možeš da osetiš blagu upalu mišića, kao posle dobrog treninga.',
+  },
+  {
+    question: 'Do kada moram da počnem?',
+    answer:
+      'Najkasnije do 30. novembra. Što se ranije prijaviš, lakše biraš termin koji ti odgovara.',
+  },
+  {
+    question: 'Šta da ponesem?',
+    answer:
+      'Udobnu odeću za vežbanje, patike i flašicu vode. Sve ostalo je spremno.',
+  },
+  {
+    question: 'Da li je tretman za svakoga?',
+    answer:
+      'EMS tretman se ne radi u trudnoći i kod osoba sa pejsmejkerom ili metalnim implantima. Ako nisi sigurna, slobodno nas pitaj kad te pozovemo.',
+  },
+  {
+    question: 'Šta se dešava kad pošaljem prijavu?',
+    answer:
+      'Pozovemo te u roku od 24 sata, upoznamo se, odgovorimo na sva pitanja i zajedno izaberemo termine.',
+  },
+];
+
+export const DEFAULT_BOOKING_SERVICE = '3u1 Paket (Black Friday · 11.900 din)';
+
+export const BOOKING_SERVICE_OPTIONS = [
+  {
+    value: '3u1 Paket (Black Friday · 11.900 din)',
+    label: '3u1 Paket — Black Friday (11.900 din / mesečno)',
+  },
+  {
+    value: 'Vakuum trening · 30 min',
+    label: 'Vakuum trening (30 min)',
+  },
+  {
+    value: 'Madero roller · 15 min',
+    label: 'Madero roller masaža (15 min)',
+  },
+  {
+    value: 'EMS tretman · 30 min',
+    label: 'EMS tretman (30 min, zona po izboru)',
+  },
+  {
+    value: 'Uvodne konsultacije',
+    label: 'Uvodne konsultacije i upoznavanje sa studijom',
+  },
+];
+
 export const PRICING_PACKAGES = [
   {
-    id: 'starter',
-    name: 'Starter Mesečni Paket',
-    badge: 'Uvodni program',
-    price: '14.500',
-    period: 'mesečno',
-    description: 'Idealan za upoznavanje sa EMS tehnologijom i pokretanje metabolizma.',
+    id: '3u1-black-friday',
+    name: '3u1 paket',
+    badge: 'BLACK FRIDAY −15%',
+    regularPrice: '14.000',
+    price: '11.900',
+    savings: '2.100 din',
+    currency: 'din',
+    period: 'mesečno (8 dolazaka mesečno)',
+    deadlineNote: 'Black Friday popust važi za sve koji počnu najkasnije do 30. novembra.',
+    description:
+      'Vakuum trening, madero roller i EMS tretman u jednom dolasku od 75 minuta, dva puta nedeljno — sa trenerom uz tebe sve vreme.',
     features: [
-      '8 vođenih EMS treninga (2 puta nedeljno)',
-      '1-na-1 rad sa licenciranim trenerom',
-      'Uvodno merenje i analiza sastava tela',
-      'Osnovne smernice za ishranu i hidrataciju',
-      'Kompletna oprema za trening obezbeđena'
+      'Vakuum trening · 30 min',
+      'Madero roller · 15 min',
+      'EMS tretman · 30 min, zona po izboru',
+      '2 dolaska nedeljno (8 dolazaka mesečno)',
+      'Trener uz tebe tokom celog dolaska',
     ],
-    popular: false
+    popular: true,
   },
-  {
-    id: 'transformation-90',
-    name: '90-Dnevni Total Fit',
-    badge: 'Najtraženiji program',
-    price: '39.900',
-    installments: 'ili 3 × 16.600 RSD',
-    period: 'kompletan tromesečni program',
-    description: 'Sveobuhvatan sistem transformacije sa sinergijom EMS-a, vakum tehnologije i maderoterapije.',
-    features: [
-      'Kompletan 90-dnevni plan vođenih treninga',
-      'Kombinacija EMS + Vakum IR kapsula + Madero roler',
-      'Personalizovani plan ishrane prilagođen tvom rasporedu',
-      'Kontinuirana podrška i vođenje sa trenerima (Vuk & Lazar)',
-      'Periodična merenja napretka (30, 60, 90. dan)',
-      'Vodiči za zdrave navike i obroke bez stresa'
-    ],
-    popular: true
-  },
-  {
-    id: 'madero-vakum',
-    name: 'Body Sculpt & Detox',
-    badge: 'Ciljano oblikovanje',
-    price: '16.900',
-    period: 'paket od 10 termina',
-    description: 'Fokusiran na eliminaciju celulita, limfnu drenažu i zatezanje kože.',
-    features: [
-      '10 kombinovanih termina: Vakum IR + Madero roler',
-      'Ciljano tretiranje regija (stomak, butine, gluteus)',
-      'Ubrzana limfna cirkulacija i izbacivanje viška vode',
-      'Preporuke za hidrataciju i negu kože',
-      'Termini po fleksibilnom dogovoru'
-    ],
-    popular: false
-  }
 ];
 
 export interface InstagramReel {
