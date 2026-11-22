@@ -3,8 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   ArrowRight,
   Clock,
-  ChevronLeft,
-  ChevronRight,
   ChevronDown,
   Phone,
   Instagram,
@@ -19,7 +17,6 @@ import {
 import {
   BLACK_FRIDAY_FAQ,
   BLACK_FRIDAY_STEPS,
-  BOOKING_SERVICE_OPTIONS,
   CLIENT_STORIES,
   CONTACT_INFO,
   DEFAULT_BOOKING_SERVICE,
@@ -36,15 +33,13 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
-  const [activeSlide, setActiveSlide] = useState(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-  // Inline Black Friday form state ([9] FORMA)
+  // Inline Black Friday reservation form state ([9] FORMA — Ime i prezime, Broj telefona, Email)
   const formSectionRef = useRef<HTMLElement | null>(null);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [service, setService] = useState(DEFAULT_BOOKING_SERVICE);
-  const [timePreference, setTimePreference] = useState<'Pre podne' | 'Popodne' | 'Uveče'>('Popodne');
+  const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -52,21 +47,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const pkg = PRICING_PACKAGES[0];
   const featuredTestimonials = CLIENT_STORIES.slice(0, 2);
 
-  const scrollToBookingForm = (selectPackage = true) => {
-    if (selectPackage) {
-      setService(DEFAULT_BOOKING_SERVICE);
-    }
+  const scrollToBookingForm = () => {
     if (formSectionRef.current) {
       formSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  };
-
-  const nextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % BLACK_FRIDAY_STEPS.length);
-  };
-
-  const prevSlide = () => {
-    setActiveSlide((prev) => (prev - 1 + BLACK_FRIDAY_STEPS.length) % BLACK_FRIDAY_STEPS.length);
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
@@ -85,9 +69,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         body: JSON.stringify({
           name: name.trim(),
           phone: phone.trim(),
-          service,
-          timePreference,
-          message: 'Prijava preko Black Friday 3u1 landing stranice.',
+          email: email.trim(),
+          service: DEFAULT_BOOKING_SERVICE,
+          message: 'Prijava za 3u1 Black Friday paket.',
           source: 'Black Friday Landing (/black-friday)',
         }),
       });
@@ -116,131 +100,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
     transition: { duration: 0.5, ease: 'easeOut' as const },
   };
 
-  const currentHeroStep = BLACK_FRIDAY_STEPS[activeSlide];
-
   return (
     <div className="space-y-16 sm:space-y-24 pb-16 overflow-hidden">
 
-      {/* [1] NASLOV — Hero Section with Organic Wave Banner & 3u1 Visual Preview */}
+      {/* [1] NASLOV — Clean, focused Hero without cluttered text or extra side box */}
       <OrganicShapeBanner
         imageSrc="https://64.media.tumblr.com/893cd77fa9c94a77ca17990a0430b4a8/822f13a412d29853-a1/s2048x3072/0fbe7b2cb3c43b766b4902af70338b40a712ccc6.jpg"
         imageAlt="New Fitems 3u1 paket Black Friday"
         className="-mt-4 sm:-mt-8"
-        rightContent={
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="w-full max-w-sm sm:max-w-md"
-          >
-            <div className="bg-white/95 backdrop-blur-xl rounded-3xl border border-stone-200/90 shadow-2xl relative overflow-hidden group">
-
-              {/* Visual Equipment Image */}
-              <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-stone-900">
-                <img
-                  src={currentHeroStep.image}
-                  alt={currentHeroStep.title}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/35 to-black/30" />
-
-                {/* Top Controls inside Photo */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                  <span className="font-['Caveat'] text-2xl text-[#c4e117] drop-shadow-md">
-                    Šta obuhvata 3u1 dolazak
-                  </span>
-                  <div className="flex items-center gap-1 bg-black/65 backdrop-blur-md px-2 py-1 rounded-full border border-white/20">
-                    <button
-                      onClick={prevSlide}
-                      className="w-7 h-7 rounded-full hover:bg-white/20 flex items-center justify-center transition-colors text-white cursor-pointer"
-                      aria-label="Prethodni tretman"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <span className="text-[11px] font-bold text-stone-200 px-1 tabular-nums">
-                      {activeSlide + 1} / {BLACK_FRIDAY_STEPS.length}
-                    </span>
-                    <button
-                      onClick={nextSlide}
-                      className="w-7 h-7 rounded-full hover:bg-white/20 flex items-center justify-center transition-colors text-white cursor-pointer"
-                      aria-label="Sledeći tretman"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Shape Divider cutting into white card */}
-                <div className="absolute -bottom-[1px] left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
-                  <ShapeDivider
-                    type="layered-waves"
-                    height={36}
-                    color="#ffffff"
-                    accentColor="rgba(196, 225, 23, 0.45)"
-                  />
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="p-5 sm:p-6 space-y-4 bg-white text-stone-900">
-                {/* Interactive step selector tabs */}
-                <div className="grid grid-cols-3 gap-1.5 bg-stone-100 p-1 rounded-xl">
-                  {BLACK_FRIDAY_STEPS.map((s, idx) => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => setActiveSlide(idx)}
-                      className={`py-1.5 px-2 rounded-lg text-[11px] font-bold transition-colors cursor-pointer whitespace-nowrap truncate ${
-                        activeSlide === idx
-                          ? 'bg-black text-[#c4e117] shadow-2xs'
-                          : 'text-stone-600 hover:text-black'
-                      }`}
-                    >
-                      {s.step}. {s.title.split(' ')[0]}
-                    </button>
-                  ))}
-                </div>
-
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentHeroStep.id}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
-                    className="space-y-3"
-                  >
-                    <div className="flex items-center justify-between gap-2 text-xs">
-                      <span className="font-['Montserrat'] font-extrabold uppercase tracking-wider text-black">
-                        Korak {currentHeroStep.step}
-                      </span>
-                      <span className="font-bold text-stone-700 tabular-nums">
-                        {currentHeroStep.duration}
-                      </span>
-                    </div>
-
-                    <h3 className="font-['Montserrat'] font-extrabold text-xl sm:text-2xl uppercase tracking-wide text-black">
-                      {currentHeroStep.title}
-                    </h3>
-
-                    <p className="text-xs text-stone-600 leading-relaxed">
-                      {currentHeroStep.description}
-                    </p>
-
-                    <div className="p-3 rounded-2xl bg-[#FAF3EB] border border-stone-200 flex items-center justify-between text-xs">
-                      <span className="font-medium text-stone-700">Ukupno u jednom dolasku:</span>
-                      <strong className="text-black font-bold tabular-nums">75 min (3 tretmana)</strong>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-            </div>
-          </motion.div>
-        }
       >
-        {/* Black Friday Badge in black + neon green (#C4E117) */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -255,74 +123,54 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           </span>
         </motion.div>
 
-        {/* Hero Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="font-['Montserrat'] font-extrabold text-[32px] xs:text-[38px] sm:text-5xl lg:text-[54px] tracking-tight text-black leading-[1.05] text-balance max-md:[text-shadow:_0_1px_12px_rgba(250,243,235,0.95)]"
+          className="font-['Montserrat'] font-extrabold text-[34px] xs:text-[40px] sm:text-5xl lg:text-[58px] tracking-tight text-black leading-[1.04] text-balance max-md:[text-shadow:_0_1px_12px_rgba(250,243,235,0.95)]"
         >
-          Tvojih 75 minuta. Dva puta nedeljno. Samo za tebe.
+          Tvojih 75 minuta. Dva puta nedeljno.
         </motion.h1>
 
-        {/* Subheadline & Body Copy */}
-        <motion.div
+        <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.18 }}
-          className="space-y-2 max-md:[text-shadow:_0_1px_10px_rgba(250,243,235,0.95)]"
+          className="text-sm sm:text-lg text-stone-800 max-md:text-stone-950 leading-relaxed max-w-lg max-md:[text-shadow:_0_1px_10px_rgba(250,243,235,0.95)]"
         >
-          <p className="font-['Montserrat'] font-bold text-sm sm:text-base text-stone-950">
-            3u1 paket: vakuum trening, madero roller i EMS tretman u jednom dolasku
-          </p>
-          <p className="text-sm sm:text-base text-stone-700 max-md:text-stone-900 leading-relaxed">
-            Bez pretrpane teretane i bez znanja o vežbanju, sa trenerom koji je uz tebe od prvog do poslednjeg minuta.
-          </p>
-        </motion.div>
+          Bez pretrpane teretane i bez znanja o vežbanju, sa trenerom koji je uz tebe od prvog do poslednjeg minuta.
+        </motion.p>
 
-        {/* Price Callout + Urgency + Live Countdown */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.26 }}
+          transition={{ duration: 0.5, delay: 0.24 }}
           className="space-y-3 pt-1"
         >
-          <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <span className="text-base sm:text-lg text-stone-500 line-through tabular-nums">
               14.000 din
             </span>
-            <span className="font-['Montserrat'] font-extrabold text-2xl sm:text-3xl text-black tabular-nums">
+            <span className="font-['Montserrat'] font-extrabold text-2xl sm:text-4xl text-black tabular-nums">
               11.900 din mesečno
             </span>
-            <span className="text-xs sm:text-sm font-semibold text-stone-700">
-              · Black Friday ušteda 2.100 din
-            </span>
           </div>
-
-          <p className="text-xs sm:text-sm font-semibold text-stone-900">
-            Black Friday cena važi samo za početak do 30. novembra
-          </p>
-
           <BlackFridayCountdown variant="light" compact />
         </motion.div>
 
-        {/* Primary CTA */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.34 }}
-          className="pt-2 space-y-2"
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="pt-2"
         >
           <button
-            onClick={() => scrollToBookingForm(true)}
+            onClick={scrollToBookingForm}
             className="w-full sm:w-auto bg-[#c4e117] hover:bg-[#b5d014] active:scale-[0.98] text-black px-8 py-4 rounded-2xl font-['Montserrat'] font-extrabold tracking-wider text-sm sm:text-base uppercase transition-all shadow-md inline-flex items-center justify-center gap-2.5 cursor-pointer group whitespace-nowrap"
           >
             <span>Rezerviši svoj termin</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
-          <p className="text-xs text-stone-600 font-medium">
-            Prijava traje 30 sekundi. Javljamo ti se mi.
-          </p>
         </motion.div>
       </OrganicShapeBanner>
 
@@ -330,7 +178,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       <motion.section {...fadeInUp} className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
-          {/* [2] PREPOZNAJEŠ LI SE? */}
           <div className="lg:col-span-6 bg-white rounded-3xl p-7 sm:p-10 border border-stone-300/80 shadow-xs flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <span className="font-['Caveat'] text-2xl sm:text-3xl text-stone-600 block">
@@ -359,7 +206,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* [3] REŠENJE */}
           <div className="lg:col-span-6 bg-[#000000] text-[#FAF3EB] rounded-3xl p-7 sm:p-10 shadow-xl flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <span className="font-['Caveat'] text-2xl sm:text-3xl text-[#c4e117] block">
@@ -390,7 +236,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </motion.section>
 
-      {/* [4] KAKO IZGLEDA TVOJ DOLAZAK — Vizuelni prikaz Vakuum treninga, Madero rollera i EMS tretmana */}
+      {/* [4] KORAK PO KORAK — Kako izgleda tvoj dolazak (Vakuum, Madero roller, EMS) */}
       <motion.section {...fadeInUp} className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="font-['Caveat'] text-2xl sm:text-3xl text-stone-600 block">
@@ -415,7 +261,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               className="bg-white rounded-3xl border border-stone-300/80 shadow-md overflow-hidden flex flex-col justify-between group hover:border-black transition-colors"
             >
               <div>
-                {/* Real Studio Visual Photo + Wave Divider */}
                 <div className="relative h-60 sm:h-64 w-full overflow-hidden bg-stone-900">
                   <img
                     src={step.image}
@@ -454,7 +299,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                   </div>
                 </div>
 
-                {/* Explanation */}
                 <div className="p-6 pt-3 space-y-3">
                   <p className="text-sm text-stone-800 leading-relaxed font-normal">
                     {step.description}
@@ -468,7 +312,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           ))}
         </div>
 
-        {/* Summary strip */}
         <div className="bg-[#FAF3EB] border border-stone-300 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 text-center sm:text-left">
             <div className="w-10 h-10 rounded-xl bg-black text-[#c4e117] flex items-center justify-center shrink-0">
@@ -485,7 +328,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           </div>
 
           <button
-            onClick={() => scrollToBookingForm(true)}
+            onClick={scrollToBookingForm}
             className="bg-black hover:bg-stone-900 text-[#c4e117] px-5 py-3 rounded-xl font-['Montserrat'] font-extrabold text-xs uppercase tracking-wider transition-colors flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap"
           >
             <span>Rezerviši svoj termin</span>
@@ -494,7 +337,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </motion.section>
 
-      {/* [5] ZAŠTO NEW FITEMS */}
+      {/* TRANSFORMACIJA (3u1 program) — odmah posle korak po korak */}
+      <motion.div {...fadeInUp}>
+        <BeforeAfterSlider onOpenBooking={scrollToBookingForm} />
+      </motion.div>
+
+      {/* [5] SVE PRILAGOĐENO TEBI — Zašto New Fitems */}
       <motion.section {...fadeInUp} className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8">
         <div className="max-w-2xl space-y-1">
           <span className="font-['Caveat'] text-2xl sm:text-3xl text-stone-600 block">
@@ -546,63 +394,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </motion.section>
 
-      {/* [6] PRE I POSLE — Stvarne promene naših članova */}
-      <motion.div {...fadeInUp} className="space-y-8">
-        <BeforeAfterSlider onOpenBooking={() => scrollToBookingForm(true)} />
-
-        {/* 2 prava utiska klijenata uz slajder */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-5">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-            <div>
-              <span className="font-['Caveat'] text-2xl text-stone-600 block">
-                Stvarne promene naših članova
-              </span>
-              <h3 className="font-['Montserrat'] font-extrabold text-xl sm:text-2xl uppercase tracking-wide text-black">
-                Utisci iz studija
-              </h3>
-            </div>
-            <button
-              onClick={() => onNavigate('stories')}
-              className="text-xs font-bold uppercase tracking-wider text-stone-800 hover:text-black flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
-            >
-              <span>Pogledaj sva iskustva i video snimke</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {featuredTestimonials.map((story) => (
-              <div
-                key={story.name}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-300/80 shadow-xs flex flex-col justify-between space-y-4"
-              >
-                <p className="text-sm text-stone-800 leading-relaxed italic">
-                  „{story.quote}“
-                </p>
-                <div className="pt-3 border-t border-stone-100 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-black text-[#c4e117] font-bold flex items-center justify-center text-[11px]">
-                      {story.avatar}
-                    </div>
-                    <div>
-                      <strong className="text-black font-bold">{story.name}</strong>
-                      <span className="text-stone-500"> · {story.city}</span>
-                    </div>
-                  </div>
-                  <span className="font-bold text-stone-900">{story.result}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* [7] PONUDA — Fokus na 3u1 paket (Black Friday −15%) */}
+      {/* CENA PAKETA — 3u1 paket (Black Friday −15%) */}
       <motion.section {...fadeInUp} className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="bg-[#000000] text-[#FAF3EB] rounded-3xl p-7 sm:p-10 lg:p-12 shadow-2xl ring-2 ring-[#c4e117]/70">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
 
-            {/* Left Column: Features */}
             <div className="md:col-span-7 space-y-5">
               <div>
                 <span className="inline-block bg-[#c4e117] text-black font-['Montserrat'] font-extrabold text-xs uppercase tracking-wider px-3.5 py-1 rounded-md mb-3">
@@ -625,7 +421,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               </div>
             </div>
 
-            {/* Right Column: Price & CTA */}
             <div className="md:col-span-5 bg-white/5 border border-white/15 rounded-2xl p-6 space-y-4">
               <div>
                 <div className="text-base text-stone-400 line-through tabular-nums">
@@ -649,7 +444,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               </p>
 
               <button
-                onClick={() => scrollToBookingForm(true)}
+                onClick={scrollToBookingForm}
                 className="w-full bg-[#c4e117] hover:bg-[#b5d014] active:scale-[0.98] text-black font-['Montserrat'] font-extrabold uppercase tracking-wider py-4 rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
               >
                 <span>Želim 3u1 paket</span>
@@ -658,6 +453,52 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </div>
 
           </div>
+        </div>
+      </motion.section>
+
+      {/* UTISCI — odmah ispod cene paketa */}
+      <motion.section {...fadeInUp} className="max-w-6xl mx-auto px-4 sm:px-6 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+          <div>
+            <span className="font-['Caveat'] text-2xl sm:text-3xl text-stone-600 block">
+              Stvarne promene naših članova
+            </span>
+            <h2 className="font-['Montserrat'] font-extrabold text-2xl sm:text-3xl uppercase tracking-wide text-black">
+              Utisci iz studija
+            </h2>
+          </div>
+          <button
+            onClick={() => onNavigate('stories')}
+            className="text-xs font-bold uppercase tracking-wider text-stone-800 hover:text-black flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
+          >
+            <span>Pogledaj sva iskustva i video snimke</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {featuredTestimonials.map((story) => (
+            <div
+              key={story.name}
+              className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-300/80 shadow-xs flex flex-col justify-between space-y-4"
+            >
+              <p className="text-sm text-stone-800 leading-relaxed italic">
+                „{story.quote}“
+              </p>
+              <div className="pt-3 border-t border-stone-100 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-full bg-black text-[#c4e117] font-bold flex items-center justify-center text-[11px]">
+                    {story.avatar}
+                  </div>
+                  <div>
+                    <strong className="text-black font-bold">{story.name}</strong>
+                    <span className="text-stone-500"> · {story.city}</span>
+                  </div>
+                </div>
+                <span className="font-bold text-stone-900">{story.result}</span>
+              </div>
+            </div>
+          ))}
         </div>
       </motion.section>
 
@@ -704,7 +545,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 sm:px-6 pb-5 pt-0 text-xs sm:text-sm text-stone-700 leading-relaxed border-t border-stone-100 mt-1 pt-3">
+                      <div className="px-5 sm:px-6 pb-5 pt-3 text-xs sm:text-sm text-stone-700 leading-relaxed border-t border-stone-100 mt-1">
                         {faq.answer}
                       </div>
                     </motion.div>
@@ -716,7 +557,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </motion.section>
 
-      {/* [9] FORMA & [STRANICA „HVALA“] */}
+      {/* [9] FORMA — Samo Ime i prezime, Broj telefona i Email */}
       <motion.section
         id="rezervacija"
         ref={formSectionRef}
@@ -734,7 +575,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                   Rezerviši svoj termin po Black Friday ceni od 11.900 din
                 </h2>
                 <p className="text-sm text-stone-600">
-                  Ostavi nam ime i broj, a mi te zovemo u roku od 24h.
+                  Ostavi podatke, a mi te zovemo u roku od 24h.
                 </p>
               </div>
 
@@ -755,25 +596,25 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               )}
 
               <form onSubmit={handleFormSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      htmlFor="bf-name"
-                      className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1.5"
-                    >
-                      Ime i prezime <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      id="bf-name"
-                      type="text"
-                      required
-                      placeholder="npr. Jelena Petrović"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="w-full px-4 py-3.5 rounded-xl border border-stone-300 bg-[#FAF3EB]/40 focus:bg-white focus:outline-none focus:border-black text-sm text-stone-900"
-                    />
-                  </div>
+                <div>
+                  <label
+                    htmlFor="bf-name"
+                    className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1.5"
+                  >
+                    Ime i prezime <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="bf-name"
+                    type="text"
+                    required
+                    placeholder="npr. Jelena Petrović"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full px-4 py-3.5 rounded-xl border border-stone-300 bg-[#FAF3EB]/40 focus:bg-white focus:outline-none focus:border-black text-sm text-stone-900"
+                  />
+                </div>
 
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label
                       htmlFor="bf-phone"
@@ -791,57 +632,22 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                       className="w-full px-4 py-3.5 rounded-xl border border-stone-300 bg-[#FAF3EB]/40 focus:bg-white focus:outline-none focus:border-black text-sm text-stone-900"
                     />
                   </div>
-                </div>
 
-                <div>
-                  <label
-                    htmlFor="bf-service"
-                    className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1.5"
-                  >
-                    Program koji te interesuje
-                  </label>
-                  <select
-                    id="bf-service"
-                    value={service}
-                    onChange={(e) => setService(e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-xl border border-stone-300 bg-[#FAF3EB]/40 focus:bg-white focus:outline-none focus:border-black text-sm text-stone-900 cursor-pointer font-medium"
-                  >
-                    {BOOKING_SERVICE_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <span className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-2">
-                    Kada ti najviše odgovaraju termini?
-                  </span>
-                  <div className="grid grid-cols-3 gap-2.5">
-                    {(['Pre podne', 'Popodne', 'Uveče'] as const).map((slot) => {
-                      const isSelected = timePreference === slot;
-                      return (
-                        <label
-                          key={slot}
-                          className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl border text-xs sm:text-sm font-bold cursor-pointer transition-all ${
-                            isSelected
-                              ? 'bg-black text-[#c4e117] border-black shadow-xs'
-                              : 'bg-[#FAF3EB]/40 text-stone-800 border-stone-300 hover:border-black'
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            name="timePreference"
-                            value={slot}
-                            checked={isSelected}
-                            onChange={() => setTimePreference(slot)}
-                            className="sr-only"
-                          />
-                          <span>{slot}</span>
-                        </label>
-                      );
-                    })}
+                  <div>
+                    <label
+                      htmlFor="bf-email"
+                      className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1.5"
+                    >
+                      Email
+                    </label>
+                    <input
+                      id="bf-email"
+                      type="email"
+                      placeholder="tvoj@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full px-4 py-3.5 rounded-xl border border-stone-300 bg-[#FAF3EB]/40 focus:bg-white focus:outline-none focus:border-black text-sm text-stone-900"
+                    />
                   </div>
                 </div>
 
@@ -921,13 +727,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               Dosta je bilo „od ponedeljka“. <span className="text-[#c4e117]">Kreni sada.</span>
             </h2>
             <p className="text-xs sm:text-sm text-stone-300 max-w-xl">
-              Black Friday popust na 3u1 paket važi samo za početak do 30. novembra.
+              Akcija traje do 30. novembra.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
             <button
-              onClick={() => scrollToBookingForm(true)}
+              onClick={scrollToBookingForm}
               className="w-full sm:w-auto bg-[#c4e117] hover:bg-[#b5d014] text-black px-7 py-4 rounded-xl font-['Montserrat'] font-extrabold uppercase tracking-wider text-xs sm:text-sm transition-colors cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap"
             >
               <span>Rezerviši svoj termin</span>

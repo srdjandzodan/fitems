@@ -18,7 +18,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   const pages = [
     { id: 'home', label: 'Početna', path: '/' },
     { id: 'concept', label: 'Brend Koncept', path: '/koncept' },
-    { id: 'services', label: 'Sprave & EMS', path: '/usluge' },
     { id: 'stories', label: 'Iskustva', path: '/iskustva' },
     { id: 'pricing', label: 'Cenovnik', path: '/cenovnik' },
     { id: 'contact', label: 'Lokacija', path: '/kontakt' },

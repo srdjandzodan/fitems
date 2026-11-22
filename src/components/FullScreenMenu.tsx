@@ -19,11 +19,10 @@ export const FullScreenMenu: React.FC<FullScreenMenuProps> = ({
   onOpenBooking
 }) => {
   const menuItems = [
-    { id: 'home', label: 'POČETNA', note: 'Dobrodošli u studio', path: '/' },
+    { id: 'home', label: 'POČETNA', note: 'Black Friday 3u1 paket', path: '/' },
     { id: 'concept', label: 'BREND KONCEPT', note: 'Zašto 30 minuta EMS', path: '/koncept' },
-    { id: 'services', label: 'SPRAVE & TRENINZI', note: 'EMS · Vakum · Madero', path: '/usluge' },
     { id: 'stories', label: 'ISKUSTVA KLIJENATA', note: 'Stvarni rezultati', path: '/iskustva' },
-    { id: 'pricing', label: 'CENOVNIK & PAKETI', note: 'Transparentne cene', path: '/cenovnik' },
+    { id: 'pricing', label: 'CENOVNIK & PAKETI', note: '3u1 Black Friday ponuda', path: '/cenovnik' },
     { id: 'contact', label: 'LOKACIJA & KONTAKT', note: 'Kralja Petra I 87', path: '/kontakt' },
   ];
 

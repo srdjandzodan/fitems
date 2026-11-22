@@ -3,14 +3,12 @@ import { ArrowLeftRight, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react
 
 const TRANSFORMATION = {
   id: 'zena',
-  title: 'Transformacija · Ženski program',
-  subtitle: 'Vakuum trening + Madero roller + EMS tretman',
+  title: 'Transformacija · 3u1 program',
+  subtitle: '3u1 program · Vakuum trening + Madero roller + EMS tretman',
   period: '8 nedelja (2× nedeljno)',
-  badge: 'Individualno prilagođen program',
-  beforeImg:
-    'https://64.media.tumblr.com/e7b242fe3182b264b6e62e40c63298e5/888341b81c0db6d0-04/s1280x1920/40465a2df5ab9f66115a19f21f652e83490dc596.jpg',
-  afterImg:
-    'https://64.media.tumblr.com/99cea156ff1d6d6b2e52c2e082a0d43d/888341b81c0db6d0-40/s1280x1920/e629a49abf446ca957e8ff827dcb779be21f23e1.jpg',
+  badge: 'Rezultat iz 3u1 programa',
+  beforeImg: '/images/transformacija-pre.jpg',
+  afterImg: '/images/transformacija-posle.jpg',
   details: [
     'Vidno zategnuta i oblikovana linija tela',
     'Efikasno izbacivanje viška zadržane vode i otoka',
@@ -87,7 +85,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({ onOpenBook
         <div className="mb-8 pb-6 border-b border-white/10 relative z-10">
           <div className="flex items-center gap-2 mb-1">
             <span className="font-['Caveat'] text-2xl sm:text-3xl text-[#CFF3CF]">
-              Rezultati koji govore sami za sebe
+              Stvarna promena iz 3u1 programa
             </span>
             <span className="text-[#c4e117] font-bold text-lg">•</span>
             <span className="text-xs uppercase font-['Montserrat'] font-extrabold tracking-widest text-stone-400">
@@ -98,14 +96,14 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({ onOpenBook
             PRE I POSLE NAS
           </h2>
           <p className="text-xs sm:text-sm text-stone-300 mt-1 max-w-xl font-normal">
-            Prevuci liniju levo-desno i uporedi stvarnu promenu naših članica u Novoj Pazovi.
+            Prevuci liniju levo-desno i pogledaj stvaran rezultat naše članice iz 3u1 programa u Novoj Pazovi.
           </p>
         </div>
 
         {/* Interactive Comparison Split Slider Card */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
 
-          {/* Left Column: Interactive Split Viewer in 9:16 Aspect Ratio */}
+          {/* Left Column: Interactive Split Viewer aligned 1:1 to 488x1252 */}
           <div className="lg:col-span-6 flex justify-center">
             <div
               ref={containerRef}
@@ -113,7 +111,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({ onOpenBook
               onTouchStart={(e) => {
                 if (e.touches[0]) handlePointerDown(e.touches[0].clientX);
               }}
-              className="relative w-full max-w-[340px] sm:max-w-[380px] aspect-[9/16] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/20 select-none cursor-ew-resize bg-stone-950 group touch-none"
+              className="relative w-full max-w-[260px] sm:max-w-[285px] aspect-[488/1252] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/20 select-none cursor-ew-resize bg-stone-950 group touch-none"
             >
               {/* Layer 1: "POSLE" */}
               <img

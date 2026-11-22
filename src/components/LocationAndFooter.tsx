@@ -101,16 +101,6 @@ export const LocationAndFooter: React.FC<LocationAndFooterProps> = ({
                 Brend koncept & tim
               </a>
               <a
-                href="/usluge"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('services');
-                }}
-                className="text-left hover:text-[#CFF3CF] transition-colors cursor-pointer"
-              >
-                EMS treninzi & sprave
-              </a>
-              <a
                 href="/iskustva"
                 onClick={(e) => {
                   e.preventDefault();

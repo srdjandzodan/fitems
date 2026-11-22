@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowRight, ShieldCheck, Clock, Users, Sparkles } from 'lucide-react';
 import { PRICING_PACKAGES } from '../../data/siteData';
 import { OrganicShapeBanner } from '../OrganicShapeBanner';
-import { BlackFridayCountdown } from '../BlackFridayCountdown';
 
 interface PricingPageProps {
   onOpenBooking: () => void;
@@ -57,9 +56,9 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onOpenBooking }) => {
             </span>
           </div>
 
-          <div className="pt-1">
-            <BlackFridayCountdown variant="light" compact />
-          </div>
+          <p className="text-xs sm:text-sm font-semibold text-stone-900 pt-1">
+            Akcija traje do 30. novembra.
+          </p>
 
           {/* Booking CTA Button */}
           <div className="pt-2">

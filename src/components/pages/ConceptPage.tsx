@@ -30,86 +30,41 @@ export const ConceptPage: React.FC<ConceptPageProps> = ({ onOpenBooking, onNavig
 
         {/* Hero Content */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
-            {/* Left Column: Bold Editorial Typography */}
-            <div className="lg:col-span-7 space-y-5">
-              <div className="flex items-center gap-2">
-                <span className="font-['Caveat'] text-2xl sm:text-3xl text-[#CFF3CF]">
-                  Brend koncept
-                </span>
-                <span className="text-[#c4e117] font-bold text-lg">•</span>
-                <span className="font-['Montserrat'] font-extrabold text-xs sm:text-sm uppercase tracking-widest text-stone-300">
-                  Nova Pazova
-                </span>
-              </div>
-
-              <h1 className="font-['Montserrat'] font-extrabold text-3xl sm:text-5xl lg:text-6xl uppercase tracking-wider text-white leading-tight">
-                FITNES PROGRAM ZA ŽENE I MUŠKARCE KOJI CENE SVOJE VREME
-              </h1>
-
-              {/* Designer Document Quote in Dark Contrast Div */}
-              <div className="p-6 rounded-3xl bg-white/5 border border-white/15 backdrop-blur-md text-stone-200 text-sm sm:text-base leading-relaxed font-normal shadow-lg">
-                "New FIT EMS je fitness program namenjen muškarcima i ženama. Program se sastoji iz vežbanja na spravama koje aktiviraju i stimulišu rad mišića uz vođeni trening. Treninzi traju 30 minuta što je idealno za klijente koji nemaju vremena da se dovoljno posvete treninzima u teretani, ali ipak žele da ostanu u formi i aktiviraju mišiće."
-              </div>
-
-              <div className="flex flex-wrap gap-3 pt-2 text-xs font-bold uppercase tracking-wider">
-                <button
-                  onClick={onOpenBooking}
-                  className="bg-[#c4e117] hover:bg-[#b0cb13] text-black font-['Montserrat'] font-extrabold px-7 py-4 rounded-2xl transition-all cursor-pointer flex items-center gap-2 shadow-[0_0_20px_rgba(196,225,23,0.35)]"
-                >
-                  <span>Zakaži termin za razgovor</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => onNavigate('services')}
-                  className="bg-white/10 hover:bg-white/20 border border-white/30 text-white px-6 py-4 rounded-2xl transition-all cursor-pointer"
-                >
-                  Upoznaj sve sprave
-                </button>
-              </div>
+          <div className="max-w-3xl space-y-5">
+            <div className="flex items-center gap-2">
+              <span className="font-['Caveat'] text-2xl sm:text-3xl text-[#CFF3CF]">
+                Brend koncept
+              </span>
+              <span className="text-[#c4e117] font-bold text-lg">•</span>
+              <span className="font-['Montserrat'] font-extrabold text-xs sm:text-sm uppercase tracking-widest text-stone-300">
+                Nova Pazova
+              </span>
             </div>
 
-            {/* Right Column: Dark Floating Feature Cards */}
-            <div className="lg:col-span-5 space-y-4">
-              <div className="bg-stone-900/90 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/15 shadow-2xl space-y-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#c4e117]/20 border border-[#c4e117]/40 flex items-center justify-center text-[#c4e117]">
-                    <Zap className="w-4 h-4" />
-                  </div>
-                  <h3 className="font-['Montserrat'] font-extrabold text-xl uppercase tracking-wider text-white">
-                    3 STUBA PROGRAMA
-                  </h3>
-                </div>
+            <h1 className="font-['Montserrat'] font-extrabold text-3xl sm:text-5xl lg:text-6xl uppercase tracking-wider text-white leading-tight">
+              FITNES PROGRAM ZA ŽENE I MUŠKARCE KOJI CENE SVOJE VREME
+            </h1>
 
-                <div className="space-y-3 text-xs text-stone-300">
-                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#c4e117] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-white block font-bold mb-0.5">Maksimalna mišićna kontrakcija</strong>
-                      Preko 90% aktivnih vlakana istovremeno u 30 minuta.
-                    </div>
-                  </div>
-
-                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#c4e117] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-white block font-bold mb-0.5">Podrška 1-na-1 bez stresa</strong>
-                      Trener je uvek uz tebe, podešava opremu i prati formu.
-                    </div>
-                  </div>
-
-                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#c4e117] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-white block font-bold mb-0.5">Bez teških tegova i povreda</strong>
-                      Kičma i zglobovi su zaštićeni tokom celog treninga.
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {/* Designer Document Quote in Dark Contrast Div */}
+            <div className="p-6 rounded-3xl bg-white/5 border border-white/15 backdrop-blur-md text-stone-200 text-sm sm:text-base leading-relaxed font-normal shadow-lg">
+              "New FIT EMS je fitness program namenjen muškarcima i ženama. Program se sastoji iz vežbanja na spravama koje aktiviraju i stimulišu rad mišića uz vođeni trening. Treninzi traju 30 minuta što je idealno za klijente koji nemaju vremena da se dovoljno posvete treninzima u teretani, ali ipak žele da ostanu u formi i aktiviraju mišiće."
             </div>
 
+            <div className="flex flex-wrap gap-3 pt-2 text-xs font-bold uppercase tracking-wider">
+              <button
+                onClick={onOpenBooking}
+                className="bg-[#c4e117] hover:bg-[#b0cb13] text-black font-['Montserrat'] font-extrabold px-7 py-4 rounded-2xl transition-all cursor-pointer flex items-center gap-2 shadow-[0_0_20px_rgba(196,225,23,0.35)]"
+              >
+                <span>Zakaži termin za razgovor</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => onNavigate('pricing')}
+                className="bg-white/10 hover:bg-white/20 border border-white/30 text-white px-6 py-4 rounded-2xl transition-all cursor-pointer"
+              >
+                Pogledaj 3u1 paket
+              </button>
+            </div>
           </div>
         </div>
 

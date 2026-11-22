@@ -181,7 +181,7 @@ export const BLACK_FRIDAY_FAQ = [
   {
     question: 'Da li je Black Friday cena trajna?',
     answer:
-      'Ne. 11.900 din važi samo za one koji počnu do 30. novembra. Posle toga paket se vraća na redovnu cenu od 14.000 din.',
+      'Ne. 11.900 din važi samo dok traje akcija do 30. novembra. Posle toga paket se vraća na redovnu cenu od 14.000 din.',
   },
   {
     question: 'Nikad nisam trenirala. Da li je ovo za mene?',
@@ -194,9 +194,9 @@ export const BLACK_FRIDAY_FAQ = [
       'Ne. Osećaš jake kontrakcije mišića, a intenzitet podešavamo zajedno sa tobom. Narednog dana možeš da osetiš blagu upalu mišića, kao posle dobrog treninga.',
   },
   {
-    question: 'Do kada moram da počnem?',
+    question: 'Do kada traje akcija?',
     answer:
-      'Najkasnije do 30. novembra. Što se ranije prijaviš, lakše biraš termin koji ti odgovara.',
+      'Akcija traje do 30. novembra. Što se ranije prijaviš, lakše biraš termin koji ti odgovara.',
   },
   {
     question: 'Šta da ponesem?',
@@ -250,7 +250,7 @@ export const PRICING_PACKAGES = [
     savings: '2.100 din',
     currency: 'din',
     period: 'mesečno (8 dolazaka mesečno)',
-    deadlineNote: 'Black Friday popust važi za sve koji počnu najkasnije do 30. novembra.',
+    deadlineNote: 'Akcija traje do 30. novembra.',
     description:
       'Vakuum trening, madero roller i EMS tretman u jednom dolasku od 75 minuta, dva puta nedeljno — sa trenerom uz tebe sve vreme.',
     features: [

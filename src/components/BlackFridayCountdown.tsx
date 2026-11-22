@@ -63,8 +63,8 @@ export const BlackFridayCountdown: React.FC<BlackFridayCountdownProps> = ({
         <Clock className={`w-3.5 h-3.5 shrink-0 ${isDark ? 'text-[#c4e117]' : 'text-black'}`} />
         <span>
           {timeLeft.expired
-            ? 'Black Friday rok za prijavu (30. novembar)'
-            : 'Odbrojavanje do 30. novembra:'}
+            ? 'Akcija do 30. novembra je završena'
+            : 'Akcija traje do 30. novembra:'}
         </span>
       </div>
 

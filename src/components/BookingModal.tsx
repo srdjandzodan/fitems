@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, Mail, Phone, ArrowRight, MapPin, Loader2, AlertCircle, Instagram } from 'lucide-react';
-import { BOOKING_SERVICE_OPTIONS, CONTACT_INFO, DEFAULT_BOOKING_SERVICE } from '../data/siteData';
+import { CONTACT_INFO, DEFAULT_BOOKING_SERVICE } from '../data/siteData';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -16,9 +16,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [notes, setNotes] = useState('');
-  const [service, setService] = useState(initialService);
-  const [timePreference, setTimePreference] = useState('Popodne');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -42,9 +39,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           name: name.trim(),
           phone: phone.trim(),
           email: email.trim(),
-          service,
-          timePreference,
-          message: notes.trim(),
+          service: initialService,
+          message: 'Prijava za 3u1 Black Friday paket.',
           source: 'BookingModal (Black Friday)',
         }),
       });
@@ -66,9 +62,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     }
   };
 
-  const mailSubject = encodeURIComponent(`Black Friday Upit: ${service} - ${name}`);
+  const mailSubject = encodeURIComponent(`Black Friday Upit: ${initialService} - ${name}`);
   const mailBody = encodeURIComponent(
-    `Poštovani Vuk i Lazar,\n\nZainteresovana sam za Black Friday termin u New Fitems studiju.\n\nIme: ${name}\nTelefon: ${phone}\nEmail: ${email}\nIzabrani program: ${service}\nKada mi najviše odgovaraju termini: ${timePreference}\nNapomena: ${notes}\n\nPozdrav,\n${name}`
+    `Poštovani Vuk i Lazar,\n\nZainteresovana sam za Black Friday termin u New Fitems studiju.\n\nIme: ${name}\nTelefon: ${phone}\nEmail: ${email}\nProgram: ${initialService}\n\nPozdrav,\n${name}`
   );
   const directMailLink = `mailto:${CONTACT_INFO.email}?subject=${mailSubject}&body=${mailBody}`;
 
@@ -78,8 +74,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     setName('');
     setPhone('');
     setEmail('');
-    setNotes('');
-    setService(DEFAULT_BOOKING_SERVICE);
     onClose();
   };
 
@@ -106,7 +100,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 Rezerviši svoj termin
               </h3>
               <p className="text-xs text-stone-600 mt-1.5">
-                Ostavi nam ime i broj, a mi te zovemo u roku od 24h.
+                Ostavi podatke, a mi te zovemo u roku od 24h.
               </p>
             </div>
 
@@ -137,87 +131,30 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1">
-                    Broj telefona <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="069 123 4567"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-black text-sm text-stone-900"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1">
-                    Email <span className="text-stone-400 font-normal lowercase">(opciono)</span>
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="tvoj@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-black text-sm text-stone-900"
-                  />
-                </div>
+              <div>
+                <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1">
+                  Broj telefona <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="069 123 4567"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-black text-sm text-stone-900"
+                />
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1">
-                  Program koji te interesuje
+                  Email
                 </label>
-                <select
-                  value={service}
-                  onChange={(e) => setService(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-black text-sm text-stone-900 cursor-pointer font-medium"
-                >
-                  {BOOKING_SERVICE_OPTIONS.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1.5">
-                  Kada ti najviše odgovaraju termini?
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['Pre podne', 'Popodne', 'Uveče'].map((slot) => {
-                    const selected = timePreference === slot;
-                    return (
-                      <button
-                        key={slot}
-                        type="button"
-                        onClick={() => setTimePreference(slot)}
-                        className={`py-2.5 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-                          selected
-                            ? 'bg-black text-[#c4e117] border-black shadow-xs'
-                            : 'bg-white text-stone-700 border-stone-300 hover:border-black'
-                        }`}
-                      >
-                        {slot}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-1">
-                  Poruka ili napomena <span className="text-stone-400 font-normal lowercase">(opciono)</span>
-                </label>
-                <textarea
-                  rows={2}
-                  placeholder="Npr. Imate li slobodan termin ovog utorka ili četvrtka?"
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-black text-xs text-stone-900 resize-none"
+                <input
+                  type="email"
+                  placeholder="tvoj@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-black text-sm text-stone-900"
                 />
               </div>
 
@@ -295,8 +232,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             </p>
 
             <div className="p-4 bg-white rounded-2xl border border-stone-300 text-left text-xs space-y-1.5">
-              <div><strong className="text-black">Program:</strong> {service}</div>
-              <div><strong className="text-black">Preferirani termin:</strong> {timePreference}</div>
+              <div><strong className="text-black">Ime i prezime:</strong> {name}</div>
+              <div><strong className="text-black">Broj telefona:</strong> {phone}</div>
+              {email && <div><strong className="text-black">Email:</strong> {email}</div>}
               <div><strong className="text-black">Studio:</strong> Kralja Petra I Karađorđevića 87, Nova Pazova</div>
             </div>
 
