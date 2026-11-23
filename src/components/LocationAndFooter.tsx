@@ -149,9 +149,13 @@ export const LocationAndFooter: React.FC<LocationAndFooterProps> = ({
                   {CONTACT_INFO.phoneDisplay}
                 </a>
               </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[#CFF3CF] shrink-0" />
-                <span>Ponedeljak – Subota, po zakazanim terminima</span>
+              <div className="flex items-start gap-2">
+                <Clock className="w-4 h-4 text-[#CFF3CF] shrink-0 mt-0.5" />
+                <div className="space-y-0.5">
+                  <span className="block">{CONTACT_INFO.workingHours.weekdays}</span>
+                  <span className="block">{CONTACT_INFO.workingHours.saturday}</span>
+                  <span className="block text-stone-500">{CONTACT_INFO.workingHours.sunday}</span>
+                </div>
               </div>
             </div>
 

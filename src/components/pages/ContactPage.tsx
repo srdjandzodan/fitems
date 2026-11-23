@@ -133,11 +133,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenBooking }) => {
 
               <div className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-[#8ea800] shrink-0 mt-0.5" />
-                <div>
+                <div className="space-y-0.5">
                   <strong className="block text-stone-900 font-bold uppercase text-xs">
                     Radno vreme
                   </strong>
-                  <span>Ponedeljak – Subota: po zakazanim terminima</span>
+                  <span className="block">{CONTACT_INFO.workingHours.weekdays}</span>
+                  <span className="block">{CONTACT_INFO.workingHours.saturday}</span>
+                  <span className="block text-stone-500">{CONTACT_INFO.workingHours.sunday}</span>
                 </div>
               </div>
             </div>

@@ -119,7 +119,7 @@ Izabrani program: ${service}
 Dodatna poruka: ${message || 'Nema dodatnih napomena'}
 
 Studio: Kralja Petra I Karađorđevića 87, Nova Pazova
-Telefon studija: 069 270 7833
+Telefon studija: +381 69 270 7889
 `;
 
     const htmlContent = `

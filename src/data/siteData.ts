@@ -340,13 +340,18 @@ export const INSTAGRAM_HIGHLIGHTS = [
 ];
 
 export const CONTACT_INFO = {
-  phone: "0692707833",
-  phoneDisplay: "069 270 7833",
-  phoneIntl: "+381692707833",
-  email: "newfitems.novapazova@gmail.com",
+  phone: "+381692707889",
+  phoneDisplay: "+381 69 270 7889",
+  phoneIntl: "+381692707889",
+  email: "newfitems.oxybaric@gmail.com",
   address: "Kralja Petra I Karađorđevića 87, Nova Pazova",
   mapsUrl: "https://maps.app.goo.gl/NTVj2zU3F6yqZHwq7",
   instagramUrl: "https://www.instagram.com/newfitems.novapazova/",
   facebookUrl: "https://www.facebook.com/newfitemsstudio/?locale=sr_RS",
   tiktokUrl: "https://www.tiktok.com/@new.fitems",
+  workingHours: {
+    weekdays: "Radnim danima: 08:00 – 12:00 i 16:00 – 21:00",
+    saturday: "Subotom: 08:00 – 12:00",
+    sunday: "Nedelja: neradna",
+  },
 };

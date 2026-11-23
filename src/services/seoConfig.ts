@@ -153,7 +153,7 @@ export const PAGE_SEO_DATA: Record<PageId, PageSEO> = {
   contact: {
     path: '/kontakt',
     title: 'Kontakt i Lokacija · Kralja Petra I Karađorđevića 87 | NEW FITEMS',
-    description: 'Adresa i kontakt EMS studija New Fitems: Kralja Petra I Karađorđevića 87, Nova Pazova. Pozovite 069 270 7833 ili pošaljite online rezervaciju termina.',
+    description: 'Adresa i kontakt EMS studija New Fitems: Kralja Petra I Karađorđevića 87, Nova Pazova. Pozovite +381 69 270 7889 ili pošaljite online rezervaciju termina.',
     keywords: 'New Fitems adresa, gde se nalazi New Fitems, Kralja Petra I 87 Nova Pazova, telefon studio, radno vreme, zakazivanje termina',
     ogImage: `${BASE_URL}/assets/hero_blend_image.jpg`,
     schema: {
@@ -165,8 +165,8 @@ export const PAGE_SEO_DATA: Record<PageId, PageSEO> = {
       mainEntity: {
         '@type': 'SportsActivityLocation',
         name: 'NEW FITEMS Nova Pazova',
-        telephone: '+381692707833',
-        email: 'newfitems.novapazova@gmail.com',
+        telephone: '+381692707889',
+        email: 'newfitems.oxybaric@gmail.com',
         address: {
           '@type': 'PostalAddress',
           streetAddress: 'Kralja Petra I Karađorđevića 87',
