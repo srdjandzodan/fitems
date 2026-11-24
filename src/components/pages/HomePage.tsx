@@ -76,9 +76,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         }),
       });
 
-      const data = await response.json();
+      const rawText = await response.text();
+      let data: any = {};
+      try {
+        data = rawText ? JSON.parse(rawText) : {};
+      } catch {
+        throw new Error('Server nije vratio ispravan JSON odgovor. Proveri Vercel /api/send-email podešavanja.');
+      }
 
-      if (!response.ok && !data.success) {
+      if (!response.ok || !data.success) {
         throw new Error(data.error || 'Došlo je do greške prilikom slanja prijave.');
       }
 

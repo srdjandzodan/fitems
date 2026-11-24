@@ -51,8 +51,15 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenBooking }) => {
         }),
       });
 
-      const data = await response.json();
-      if (!response.ok && !data.success) {
+      const rawText = await response.text();
+      let data: any = {};
+      try {
+        data = rawText ? JSON.parse(rawText) : {};
+      } catch {
+        throw new Error('Server nije vratio ispravan JSON odgovor. Proveri Vercel /api/send-email podešavanja.');
+      }
+
+      if (!response.ok || !data.success) {
         throw new Error(data.error || 'Došlo je do greške prilikom slanja poruke.');
       }
 

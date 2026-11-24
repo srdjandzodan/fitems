@@ -27,6 +27,11 @@ interface EmailPayload {
   source?: string;
 }
 
+function cleanEnv(value?: string): string {
+  if (!value) return '';
+  return value.trim().replace(/^["']|["']$/g, '').trim();
+}
+
 export default async function handler(req: VercelApiRequest, res: VercelApiResponse) {
   // CORS Headers for Vercel Serverless
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -51,13 +56,15 @@ export default async function handler(req: VercelApiRequest, res: VercelApiRespo
   }
 
   try {
-    // Parse payload whether Vercel parsed it or if it came as a string
+    // Parse payload whether Vercel parsed it, passed a Buffer, or passed raw text
     let payload: EmailPayload;
-    if (typeof req.body === 'string') {
+    const rawBody = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : req.body;
+
+    if (typeof rawBody === 'string') {
       try {
-        payload = JSON.parse(req.body);
+        payload = JSON.parse(rawBody);
       } catch {
-        const params = new URLSearchParams(req.body);
+        const params = new URLSearchParams(rawBody);
         payload = {
           name: params.get('name') || '',
           phone: params.get('phone') || '',
@@ -69,7 +76,7 @@ export default async function handler(req: VercelApiRequest, res: VercelApiRespo
         };
       }
     } else {
-      payload = (req.body as EmailPayload) || {};
+      payload = (rawBody as EmailPayload) || {};
     }
 
     const {
@@ -89,16 +96,35 @@ export default async function handler(req: VercelApiRequest, res: VercelApiRespo
       });
     }
 
-    // Brevo SMTP and API Configuration
-    const SMTP_HOST = process.env.BREVO_SMTP_HOST || 'smtp-relay.brevo.com';
-    const SMTP_PORT = Number(process.env.BREVO_SMTP_PORT) || 587;
-    const SMTP_USER = process.env.BREVO_SMTP_USER || 'c0e126001@smtp-brevo.com';
-    const SMTP_KEY = process.env.BREVO_SMTP_KEY || process.env.BREVO_API_KEY || '';
+    // Brevo SMTP and API Configuration (trimmed + unquoted)
+    const SMTP_HOST = cleanEnv(process.env.BREVO_SMTP_HOST) || 'smtp-relay.brevo.com';
+    const SMTP_PORT = Number(cleanEnv(process.env.BREVO_SMTP_PORT)) || 587;
+    const SMTP_USER = cleanEnv(process.env.BREVO_SMTP_USER) || 'c0e126001@smtp-brevo.com';
+    const SMTP_KEY = cleanEnv(process.env.BREVO_SMTP_KEY) || cleanEnv(process.env.BREVO_API_KEY);
+    const API_KEY = cleanEnv(process.env.BREVO_API_KEY) || (SMTP_KEY.startsWith('xkeysib-') ? SMTP_KEY : '');
     const STUDIO_RECIPIENT =
-      process.env.STUDIO_RECIPIENT_EMAIL ||
+      cleanEnv(process.env.STUDIO_RECIPIENT_EMAIL) ||
       'newfitems.oxybaric@gmail.com,newfitems.novapazova@gmail.com,DzoxUciha11@gmail.com';
-    const SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || 'newfitems.oxybaric@gmail.com';
-    const SENDER_NAME = process.env.BREVO_SENDER_NAME || 'Vuk Djoric (New Fitems)';
+    const SENDER_EMAIL = cleanEnv(process.env.BREVO_SENDER_EMAIL) || 'newfitems.oxybaric@gmail.com';
+    const SENDER_NAME = cleanEnv(process.env.BREVO_SENDER_NAME) || 'Vuk Djoric (New Fitems)';
+
+    if (!SMTP_KEY) {
+      console.error('[Vercel Brevo] BREVO_SMTP_KEY / BREVO_API_KEY nije podešen u Vercel Environment Variables.');
+      return res.status(500).json({
+        success: false,
+        code: 'MISSING_BREVO_KEY',
+        error:
+          'Brevo ključ nije podešen na Vercel-u (Settings -> Environment Variables -> BREVO_SMTP_KEY, pa Redeploy).',
+      });
+    }
+
+    const recipientEmails = STUDIO_RECIPIENT.split(/[,\s;]+/)
+      .map((item) => item.trim())
+      .filter((addr) => addr.includes('@'));
+
+    if (recipientEmails.length === 0) {
+      recipientEmails.push('newfitems.oxybaric@gmail.com');
+    }
 
     const timestamp = new Date().toLocaleString('sr-RS', {
       timeZone: 'Europe/Belgrade',
@@ -205,98 +231,148 @@ Telefon studija: +381 69 270 7889
 </html>
 `;
 
-    // Ako ključ još nije unet na Vercel Dashboard-u, simuliramo uspešno slanje
-    if (!SMTP_KEY || SMTP_KEY.trim() === '') {
-      console.warn(
-        `[Vercel Brevo] BREVO_SMTP_KEY nije postavljen u Vercel Environment Variables. Simulacija zabeležena:\n${name} (${phone})`
-      );
+    let restError: string | null = null;
+    let smtpError: string | null = null;
+
+    // 1. Ako imamo Brevo REST API v3 ključ (xkeysib-...), šaljemo preko HTTPS REST API-ja (najbrže za serverless)
+    if (API_KEY) {
+      try {
+        const brevoApiPayload: Record<string, any> = {
+          sender: {
+            name: SENDER_NAME,
+            email: SENDER_EMAIL,
+          },
+          to: recipientEmails.map((addr) => ({ email: addr })),
+          subject,
+          htmlContent,
+          textContent,
+        };
+
+        if (email && email.trim().includes('@')) {
+          brevoApiPayload.replyTo = { email: email.trim(), name: name.trim() };
+        }
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 7000);
+
+        const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'api-key': API_KEY,
+            accept: 'application/json',
+          },
+          body: JSON.stringify(brevoApiPayload),
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (brevoResponse.ok) {
+          const result = (await brevoResponse.json()) as any;
+          console.log('[Vercel Brevo REST] Uspešno poslat email preko Brevo API:', result);
+          return res.status(200).json({
+            success: true,
+            transport: 'brevo-rest',
+            messageId: result?.messageId || 'sent',
+            message: 'Upit je uspešno poslat! Uskoro ćemo vas kontaktirati.',
+          });
+        } else {
+          const errorText = await brevoResponse.text();
+          restError = `HTTP ${brevoResponse.status}: ${errorText}`;
+          console.warn('[Vercel Brevo REST] REST API odbio:', restError);
+        }
+      } catch (err: any) {
+        restError = err?.message || String(err);
+        console.warn('[Vercel Brevo REST] REST poziv nije uspeo:', restError);
+      }
+    }
+
+    // 2. Nodemailer SMTP relay (primarno za xsmtpsib-... / SMTP Master Password ili fallback za REST)
+    const sendViaSmtpPort = async (port: number) => {
+      const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port,
+        secure: port === 465,
+        requireTLS: port === 587,
+        auth: {
+          user: SMTP_USER,
+          pass: SMTP_KEY,
+        },
+        connectionTimeout: 6000,
+        greetingTimeout: 6000,
+        socketTimeout: 8000,
+        tls: {
+          servername: SMTP_HOST,
+          rejectUnauthorized: false,
+        },
+      });
+
+      return transporter.sendMail({
+        from: `"${SENDER_NAME}" <${SENDER_EMAIL}>`,
+        to: recipientEmails.join(', '),
+        replyTo: email && email.trim().includes('@') ? email.trim() : undefined,
+        subject,
+        text: textContent,
+        html: htmlContent,
+      });
+    };
+
+    try {
+      const info = await sendViaSmtpPort(SMTP_PORT);
+      console.log(`[Vercel Brevo SMTP:${SMTP_PORT}] Email poslat! Message ID: ${info.messageId}`);
       return res.status(200).json({
         success: true,
-        simulated: true,
-        message: 'Upit je uspešno zabeležen! (Dodajte BREVO_SMTP_KEY u Vercel Environment Variables)',
+        transport: `smtp-${SMTP_PORT}`,
+        messageId: info.messageId,
+        message: 'Upit je uspešno poslat! Uskoro ćemo vas kontaktirati.',
       });
+    } catch (primarySmtpErr: any) {
+      smtpError = `Port ${SMTP_PORT}: ${primarySmtpErr?.message || String(primarySmtpErr)}`;
+      console.warn(`[Vercel Brevo SMTP] Neuspeh na portu ${SMTP_PORT}:`, smtpError);
+
+      // Ako je greška mrežna/port (a ne loša šifra), probaj alternativni port (587 <-> 465)
+      const isAuthFailure =
+        primarySmtpErr?.responseCode === 535 ||
+        /auth|invalid login|authentication/i.test(primarySmtpErr?.message || '');
+
+      if (!isAuthFailure) {
+        const fallbackPort = SMTP_PORT === 465 ? 587 : 465;
+        try {
+          const info = await sendViaSmtpPort(fallbackPort);
+          console.log(`[Vercel Brevo SMTP:${fallbackPort}] Fallback uspeo! Message ID: ${info.messageId}`);
+          return res.status(200).json({
+            success: true,
+            transport: `smtp-${fallbackPort}`,
+            messageId: info.messageId,
+            message: 'Upit je uspešno poslat! Uskoro ćemo vas kontaktirati.',
+          });
+        } catch (fallbackSmtpErr: any) {
+          smtpError += ` | Port ${fallbackPort}: ${fallbackSmtpErr?.message || String(fallbackSmtpErr)}`;
+          console.error(`[Vercel Brevo SMTP] Neuspeh i na portu ${fallbackPort}:`, fallbackSmtpErr);
+        }
+      }
     }
 
-    // 1. Primarna metoda u Vercel Serverless okruženju: Brevo REST API v3
-    // Izbegava blokade SMTP porta 587/465 na serverless cloud nodovima
-    try {
-      const recipientList = STUDIO_RECIPIENT.split(',')
-        .map((item) => ({ email: item.trim() }))
-        .filter((r) => r.email.includes('@'));
-
-      const brevoApiPayload: Record<string, any> = {
-        sender: {
-          name: SENDER_NAME,
-          email: SENDER_EMAIL,
-        },
-        to: recipientList.length > 0 ? recipientList : [{ email: 'newfitems.oxybaric@gmail.com' }],
-        subject,
-        htmlContent,
-        textContent,
-      };
-
-      if (email && email.includes('@')) {
-        brevoApiPayload.replyTo = { email: email.trim(), name };
-      }
-
-      const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': SMTP_KEY.trim(),
-          accept: 'application/json',
-        },
-        body: JSON.stringify(brevoApiPayload),
-      });
-
-      if (brevoResponse.ok) {
-        const result = (await brevoResponse.json()) as any;
-        console.log('[Vercel Brevo REST] Uspešno poslat email preko Brevo API:', result);
-        return res.status(200).json({
-          success: true,
-          messageId: result?.messageId || 'sent',
-          message: 'Upit je uspešno poslat! Uskoro ćemo vas kontaktirati.',
-        });
-      } else {
-        const errorText = await brevoResponse.text();
-        console.warn('[Vercel Brevo REST] REST API vratio:', brevoResponse.status, errorText);
-        // Ako REST API odbije (npr. ključ je strogo SMTP-only a ne API v3 ključ), idemo na Nodemailer fallback
-      }
-    } catch (restErr) {
-      console.warn('[Vercel Brevo REST] REST poziv nije uspeo, prelazak na Nodemailer SMTP fallback:', restErr);
-    }
-
-    // 2. Fallback metoda: Standardni Nodemailer SMTP relay
-    const transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: SMTP_PORT,
-      secure: SMTP_PORT === 465,
-      auth: {
-        user: SMTP_USER,
-        pass: SMTP_KEY,
+    return res.status(500).json({
+      success: false,
+      error: smtpError || restError || 'Greška prilikom slanja email-a preko Brevo servera.',
+      details: {
+        smtpHost: SMTP_HOST,
+        smtpPort: SMTP_PORT,
+        smtpUser: SMTP_USER,
+        senderEmail: SENDER_EMAIL,
+        keyType: SMTP_KEY.startsWith('xkeysib-')
+          ? 'api-v3'
+          : SMTP_KEY.startsWith('xsmtpsib-')
+          ? 'smtp-key'
+          : 'custom',
+        restError,
+        smtpError,
       },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-
-    const info = await transporter.sendMail({
-      from: `"${SENDER_NAME}" <${SENDER_EMAIL}>`,
-      to: STUDIO_RECIPIENT,
-      replyTo: email && email.includes('@') ? email : undefined,
-      subject,
-      text: textContent,
-      html: htmlContent,
-    });
-
-    console.log(`[Vercel Brevo SMTP] Email poslat preko Nodemailer SMTP! Message ID: ${info.messageId}`);
-    return res.status(200).json({
-      success: true,
-      messageId: info.messageId,
-      message: 'Upit je uspešno poslat! Uskoro ćemo vas kontaktirati.',
     });
   } catch (error: any) {
-    console.error('[Vercel Brevo] Greška pri obradi:', error);
+    console.error('[Vercel Brevo] Neočekivana greška pri obradi:', error);
     return res.status(500).json({
       success: false,
       error: error?.message || 'Greška prilikom slanja email-a sa Vercel serverless funkcije.',
