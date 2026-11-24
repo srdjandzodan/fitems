@@ -57,6 +57,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         throw new Error(data.error || 'Došlo je do greške prilikom slanja poruke.');
       }
 
+      if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+        (window as any).fbq('track', 'Lead', {
+          content_name: initialService,
+          value: 11900,
+          currency: 'RSD',
+        });
+      }
+
       setSubmitted(true);
     } catch (err: any) {
       console.error('Greška pri slanju upita:', err);

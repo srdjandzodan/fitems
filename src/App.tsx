@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import { Navbar } from './components/Navbar';
 import { FullScreenMenu } from './components/FullScreenMenu';
@@ -27,6 +27,7 @@ export default function App() {
   const [activePage, setActivePage] = useState<PageId>(getInitialPage);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const isFirstRender = useRef(true);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -34,6 +35,17 @@ export default function App() {
     damping: 30,
     restDelta: 0.001
   });
+
+  // Track Meta Pixel PageView on SPA route changes (initial load already fired in index.html)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+      (window as any).fbq('track', 'PageView');
+    }
+  }, [activePage]);
 
   // Ažuriraj SEO meta podatke i slušaj Back/Forward dugmad u pretraživaču
   useEffect(() => {

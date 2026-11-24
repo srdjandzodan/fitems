@@ -63,6 +63,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenBooking }) => {
         throw new Error(data.error || 'Došlo je do greške prilikom slanja poruke.');
       }
 
+      if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+        (window as any).fbq('track', 'Lead', {
+          content_name: formData.service,
+        });
+      }
+
       setSubmitSuccess(true);
     } catch (err: any) {
       console.error('Greška pri slanju:', err);

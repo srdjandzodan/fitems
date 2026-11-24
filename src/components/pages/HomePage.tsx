@@ -88,6 +88,14 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         throw new Error(data.error || 'Došlo je do greške prilikom slanja prijave.');
       }
 
+      if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+        (window as any).fbq('track', 'Lead', {
+          content_name: DEFAULT_BOOKING_SERVICE,
+          value: 11900,
+          currency: 'RSD',
+        });
+      }
+
       setSubmitted(true);
     } catch (err: any) {
       console.error('Greška pri slanju prijave:', err);
