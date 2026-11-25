@@ -185,7 +185,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     </>
                   ) : (
                     <>
-                      <span>Želim 3u1 paket</span>
+                      <span>Pošalji</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}

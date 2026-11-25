@@ -678,7 +678,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                       </>
                     ) : (
                       <>
-                        <span>Želim 3u1 paket</span>
+                        <span>Pošalji</span>
                         <ArrowRight className="w-4 h-4" />
                       </>
                     )}
